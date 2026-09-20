@@ -198,7 +198,7 @@ Deploy your live travel agent with a permanent public HTTPS URL for **FREE** (no
 4. Render automatically reads our included [`render.yaml`](render.yaml) and [`Procfile`](Procfile):
    - **Environment**: Python
    - **Build Command**: `pip install -r requirements.txt`
-   - **Start Command**: `uvicorn server:app --host 0.0.0.0 --port $PORT`
+   - **Start Command**: `python -m uvicorn server:app --host 0.0.0.0 --port $PORT`
    - **Plan**: Free
 5. Click **"Deploy Web Service"**!
 > 🔗 Your app is live at: `https://your-app-name.onrender.com`
