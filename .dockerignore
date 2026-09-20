@@ -1,0 +1,11 @@
+.git
+.gitignore
+.venv
+venv
+__pycache__
+*.pyc
+.env
+.pytest_cache
+scratch
+output/*.pdf
+output/*.ics
