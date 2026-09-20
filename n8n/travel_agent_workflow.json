@@ -12,30 +12,14 @@
           ]
         }
       },
-      "id": "schedule-trigger-node",
+      "id": "78e0e4c3-28f2-4a0a-b6ee-d027d14e0590",
       "name": "Every Morning 7:00 AM Trigger",
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        160,
-        240
+        208,
+        -224
       ]
-    },
-    {
-      "parameters": {
-        "httpMethod": "POST",
-        "path": "trip-monitor",
-        "options": {}
-      },
-      "id": "webhook-trigger-node",
-      "name": "On-Demand Webhook Trigger",
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2,
-      "position": [
-        160,
-        440
-      ],
-      "webhookId": "trip-monitor-webhook"
     },
     {
       "parameters": {
@@ -63,43 +47,41 @@
         },
         "options": {}
       },
-      "id": "set-context-node",
+      "id": "d2615bb5-ef67-4e75-9f9a-321ecd381ab7",
       "name": "Initialize Trip Context",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        420,
-        340
+        480,
+        -128
       ]
     },
     {
       "parameters": {
-        "method": "GET",
         "url": "=https://geocoding-api.open-meteo.com/v1/search?name={{ encodeURIComponent($json.destination) }}&count=1&language=en&format=json",
         "options": {}
       },
-      "id": "geocoding-node",
+      "id": "5871c691-f4c8-4bef-b5e1-6bd827d72c7c",
       "name": "Geocode Destination Coordinates",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        660,
-        340
+        720,
+        -128
       ]
     },
     {
       "parameters": {
-        "method": "GET",
         "url": "=https://api.open-meteo.com/v1/forecast?latitude={{ $json.results ? $json.results[0].latitude : 26.9124 }}&longitude={{ $json.results ? $json.results[0].longitude : 75.7873 }}&daily=weathercode,precipitation_probability_max,precipitation_sum,temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=1",
         "options": {}
       },
-      "id": "weather-node",
+      "id": "7c20fab8-f1a6-42ff-a6cf-23cd8914816a",
       "name": "Fetch Live Weather (Open-Meteo)",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        900,
-        340
+        960,
+        -128
       ]
     },
     {
@@ -108,7 +90,8 @@
           "options": {
             "caseSensitive": true,
             "leftValue": "",
-            "typeValidation": "strict"
+            "typeValidation": "strict",
+            "version": 1
           },
           "conditions": [
             {
@@ -125,13 +108,13 @@
         },
         "options": {}
       },
-      "id": "if-node",
+      "id": "689e58a2-0213-47a7-99d7-6022c33d55f0",
       "name": "Rain Alert Detected? (>=50%)",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1140,
-        340
+        1200,
+        -128
       ]
     },
     {
@@ -141,69 +124,88 @@
         "sendBody": true,
         "specifyBody": "json",
         "jsonBody": "={\n  \"disruption_type\": \"weather_rain\",\n  \"rain_probability\": {{ $('Fetch Live Weather (Open-Meteo)').item.json.daily.precipitation_probability_max[0] }},\n  \"trip_id\": \"{{ $('Initialize Trip Context').item.json.trip_id }}\",\n  \"destination\": \"{{ $('Initialize Trip Context').item.json.destination }}\",\n  \"traveler_email\": \"{{ $('Initialize Trip Context').item.json.traveler_email }}\"\n}",
-        "options": {}
+        "options": {
+          "timeout": 60000
+        }
       },
-      "id": "replan-webhook-node",
+      "id": "a886885e-35ab-4f38-b100-83fdf980b941",
       "name": "Trigger Agent Replan Webhook",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1400,
-        240
-      ]
+        1456,
+        -224
+      ],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
     },
     {
       "parameters": {
-        "resource": "message",
-        "operation": "send",
         "sendTo": "={{ $('Initialize Trip Context').item.json.traveler_email }}",
-        "subject": "=\ud83c\udf27\ufe0f Weather Alert: Autonomous Trip Schedule Update for {{ $('Initialize Trip Context').item.json.destination }}",
-        "emailType": "html",
-        "message": "=<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; background-color: #ffffff;\">\n  <div style=\"background: linear-gradient(135deg, #1e3a8a, #3b82f6); padding: 20px; border-radius: 8px; text-align: center; color: #ffffff;\">\n    <h2 style=\"margin: 0; font-size: 22px;\">\ud83c\udf27\ufe0f Weather Disruption Detected</h2>\n    <p style=\"margin: 8px 0 0 0; opacity: 0.9;\">Autonomous Itinerary Adaptation for <strong>{{ $('Initialize Trip Context').item.json.destination }}</strong></p>\n  </div>\n  <div style=\"padding: 20px 0;\">\n    <p>Good morning traveler,</p>\n    <p>Live meteorological monitoring has identified a <strong>{{ $('Fetch Live Weather (Open-Meteo)').item.json.daily.precipitation_probability_max[0] }}% chance of precipitation</strong> today.</p>\n    <div style=\"background: #eff6ff; border-left: 4px solid #3b82f6; padding: 12px 16px; border-radius: 4px; margin: 16px 0;\">\n      <h4 style=\"margin: 0 0 6px 0; color: #1e3a8a;\">\ud83d\udee1\ufe0f Autonomous Agent Self-Correction:</h4>\n      <ul style=\"margin: 0; padding-left: 20px; color: #1e293b;\">\n        <li>Outdoor sightseeing moved or swapped for curated indoor museums & cultural galleries.</li>\n        <li>Transit routes and traveling windows re-optimized.</li>\n      </ul>\n    </div>\n    <h4 style=\"color: #0f172a;\">\ud83d\udce5 Download Refreshed Travel Documents:</h4>\n    <p>\n      <a href=\"https://smart-tourist-attraction-recommendation.onrender.com/api/download/ics/{{ $json.trip_id || $('Initialize Trip Context').item.json.trip_id }}\" style=\"display: inline-block; background: #0284c7; color: #ffffff; padding: 10px 18px; border-radius: 6px; text-decoration: none; margin-right: 10px; font-size: 14px; font-weight: bold;\">\ud83d\udcc5 Sync Calendar (.ics)</a>\n      <a href=\"https://smart-tourist-attraction-recommendation.onrender.com/api/download/pdf/{{ $json.trip_id || $('Initialize Trip Context').item.json.trip_id }}\" style=\"display: inline-block; background: #475569; color: #ffffff; padding: 10px 18px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: bold;\">\ud83d\udcc4 Printable PDF Dossier</a>\n    </p>\n  </div>\n  <div style=\"border-top: 1px solid #e2e8f0; padding-top: 14px; font-size: 12px; color: #64748b; text-align: center;\">\n    Autonomous Trip Monitor \u2022 Smart Tourist Attraction Recommendation Agent\n  </div>\n</div>",
+        "subject": "=🌧️ Weather Alert: Autonomous Trip Schedule Update for {{ $('Initialize Trip Context').item.json.destination }}",
+        "message": "=<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; background-color: #ffffff;\">\n  <div style=\"background: linear-gradient(135deg, #1e3a8a, #3b82f6); padding: 20px; border-radius: 8px; text-align: center; color: #ffffff;\">\n    <h2 style=\"margin: 0; font-size: 22px;\">🌧️ Weather Disruption Detected</h2>\n    <p style=\"margin: 8px 0 0 0; opacity: 0.9;\">Autonomous Itinerary Adaptation for <strong>{{ $('Initialize Trip Context').item.json.destination }}</strong></p>\n  </div>\n  <div style=\"padding: 20px 0;\">\n    <p>Good morning traveler,</p>\n    <p>Live meteorological monitoring has identified a <strong>{{ $('Fetch Live Weather (Open-Meteo)').item.json.daily.precipitation_probability_max[0] }}% chance of precipitation</strong> today.</p>\n    <div style=\"background: #eff6ff; border-left: 4px solid #3b82f6; padding: 12px 16px; border-radius: 4px; margin: 16px 0;\">\n      <h4 style=\"margin: 0 0 6px 0; color: #1e3a8a;\">🛡️ Autonomous Agent Self-Correction:</h4>\n      <ul style=\"margin: 0; padding-left: 20px; color: #1e293b;\">\n        <li>Outdoor sightseeing moved or swapped for curated indoor museums & cultural galleries.</li>\n        <li>Transit routes and traveling windows re-optimized.</li>\n      </ul>\n    </div>\n    <h4 style=\"color: #0f172a;\">📥 Download Refreshed Travel Documents:</h4>\n    <p>\n      <a href=\"https://smart-tourist-attraction-recommendation.onrender.com/api/download/ics/{{ $json.trip_id || $('Initialize Trip Context').item.json.trip_id }}\" style=\"display: inline-block; background: #0284c7; color: #ffffff; padding: 10px 18px; border-radius: 6px; text-decoration: none; margin-right: 10px; font-size: 14px; font-weight: bold;\">📅 Sync Calendar (.ics)</a>\n      <a href=\"https://smart-tourist-attraction-recommendation.onrender.com/api/download/pdf/{{ $json.trip_id || $('Initialize Trip Context').item.json.trip_id }}\" style=\"display: inline-block; background: #475569; color: #ffffff; padding: 10px 18px; border-radius: 6px; text-decoration: none; font-size: 14px; font-weight: bold;\">📄 Printable PDF Dossier</a>\n    </p>\n  </div>\n  <div style=\"border-top: 1px solid #e2e8f0; padding-top: 14px; font-size: 12px; color: #64748b; text-align: center;\">\n    Autonomous Trip Monitor • Smart Tourist Attraction Recommendation Agent\n  </div>\n</div>",
         "options": {}
       },
-      "id": "gmail-alert-node",
+      "id": "5796c22d-117c-43c5-98bf-3d45722b6869",
       "name": "Send Gmail Rain Alert",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        1660,
-        240
-      ]
+        1712,
+        -224
+      ],
+      "webhookId": "ec1055a5-1a06-44bc-8558-1c21be67b83d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "EWjxiXNPOkBZUJXJ",
+          "name": "Gmail account"
+        }
+      }
     },
     {
       "parameters": {
-        "resource": "message",
-        "operation": "send",
         "sendTo": "={{ $('Initialize Trip Context').item.json.traveler_email }}",
-        "subject": "=\u2600\ufe0f Clear Skies Confirmed for {{ $('Initialize Trip Context').item.json.destination }}",
-        "emailType": "html",
-        "message": "=<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; background-color: #ffffff;\">\n  <div style=\"background: linear-gradient(135deg, #059669, #10b981); padding: 20px; border-radius: 8px; text-align: center; color: #ffffff;\">\n    <h2 style=\"margin: 0; font-size: 22px;\">\u2600\ufe0f Good Morning Traveler!</h2>\n    <p style=\"margin: 8px 0 0 0; opacity: 0.9;\">Clear weather confirmed for <strong>{{ $('Initialize Trip Context').item.json.destination }}</strong></p>\n  </div>\n  <div style=\"padding: 20px 0; color: #334155;\">\n    <p>Good morning,</p>\n    <p>Great news! Today's forecast indicates ideal conditions for outdoor exploration (Expected High: <strong>{{ $('Fetch Live Weather (Open-Meteo)').item.json.daily.temperature_2m_max[0] }}\u00b0C</strong>, Rain Probability: <strong>{{ $('Fetch Live Weather (Open-Meteo)').item.json.daily.precipitation_probability_max[0] }}%</strong>).</p>\n    <p>All scheduled outdoor sights and attractions are proceeding exactly according to your planned itinerary.</p>\n    <p>Enjoy your adventure today!</p>\n  </div>\n  <div style=\"border-top: 1px solid #e2e8f0; padding-top: 14px; font-size: 12px; color: #64748b; text-align: center;\">\n    Smart Tourist Attraction Recommendation Agent\n  </div>\n</div>",
+        "subject": "=☀️ Clear Skies Confirmed for {{ $('Initialize Trip Context').item.json.destination }}",
+        "message": "=<div style=\"font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; background-color: #ffffff;\">\n  <div style=\"background: linear-gradient(135deg, #059669, #10b981); padding: 20px; border-radius: 8px; text-align: center; color: #ffffff;\">\n    <h2 style=\"margin: 0; font-size: 22px;\">☀️ Good Morning Traveler!</h2>\n    <p style=\"margin: 8px 0 0 0; opacity: 0.9;\">Clear weather confirmed for <strong>{{ $('Initialize Trip Context').item.json.destination }}</strong></p>\n  </div>\n  <div style=\"padding: 20px 0; color: #334155;\">\n    <p>Good morning,</p>\n    <p>Great news! Today's forecast indicates ideal conditions for outdoor exploration (Expected High: <strong>{{ $('Fetch Live Weather (Open-Meteo)').item.json.daily.temperature_2m_max[0] }}°C</strong>, Rain Probability: <strong>{{ $('Fetch Live Weather (Open-Meteo)').item.json.daily.precipitation_probability_max[0] }}%</strong>).</p>\n    <p>All scheduled outdoor sights and attractions are proceeding exactly according to your planned itinerary.</p>\n    <p>Enjoy your adventure today!</p>\n  </div>\n  <div style=\"border-top: 1px solid #e2e8f0; padding-top: 14px; font-size: 12px; color: #64748b; text-align: center;\">\n    Smart Tourist Attraction Recommendation Agent\n  </div>\n</div>",
         "options": {}
       },
-      "id": "gmail-sunny-node",
+      "id": "a3c848e0-f504-4cee-8d40-c3e35ff852de",
       "name": "Send Gmail Sunny Day Confirmation",
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        1400,
-        440
-      ]
+        1456,
+        -32
+      ],
+      "webhookId": "62cf826d-1fe9-42b4-be15-9ec7875a0c82",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "EWjxiXNPOkBZUJXJ",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "trip-monitor",
+        "options": {}
+      },
+      "id": "a1f3bbaa-1832-4621-9cb4-afd2d842cfdf",
+      "name": "On-Demand Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        208,
+        -32
+      ],
+      "webhookId": "trip-monitor-webhook"
     }
   ],
+  "pinData": {},
   "connections": {
     "Every Morning 7:00 AM Trigger": {
-      "main": [
-        [
-          {
-            "node": "Initialize Trip Context",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "On-Demand Webhook Trigger": {
       "main": [
         [
           {
@@ -275,6 +277,30 @@
           }
         ]
       ]
+    },
+    "On-Demand Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Initialize Trip Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
-  }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "02b14836-814f-47ce-8b55-cdadb6852881",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ff43a4f061c2b7a1e96cba8e8bf064d9469a4a9b2119e7fa4701d3f5d5ab2e0d"
+  },
+  "nodeGroups": [],
+  "id": "lqklJIOphDwVHrya",
+  "tags": []
 }
