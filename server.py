@@ -62,6 +62,8 @@ def plan_trip_endpoint(profile: TravelerProfile):
 class ReplanRequest(BaseModel):
     trip_plan: Optional[TripPlan] = None
     trip_id: Optional[str] = None
+    destination: Optional[str] = None
+    traveler_email: Optional[str] = None
     disruption_type: str = "weather_rain"  # "weather_rain" or "budget_cut"
     rain_probability: Optional[float] = None
 
@@ -71,12 +73,18 @@ def replan_endpoint(req: ReplanRequest):
     """
     Autonomous Self-Correction Replan Endpoint:
     Simulates weather rainstorm or financial cut and invokes Skill-RAG procedural replanning.
-    Supports direct TripPlan payload, trip_id lookup, or active session fallback.
+    Supports direct TripPlan payload, trip_id lookup, destination-based planning, or active session fallback.
     """
     if req.trip_plan is not None:
         current = req.trip_plan
     elif req.trip_id and req.trip_id in SESSION_PLANS:
         current = SESSION_PLANS[req.trip_id]
+    elif req.destination:
+        dest_profile = TravelerProfile(destination=req.destination, duration_days=3)
+        current = orchestrator.plan_trip(dest_profile)
+        if req.trip_id:
+            current.trip_id = req.trip_id
+        SESSION_PLANS[current.trip_id] = current
     elif SESSION_PLANS:
         current = list(SESSION_PLANS.values())[-1]
     else:
