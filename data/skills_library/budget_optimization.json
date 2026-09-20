@@ -1,0 +1,24 @@
+{
+  "id": "budget_optimization",
+  "name": "Budget Optimization Skill",
+  "purpose": "Enforce strict financial constraints, detect budget deficits, and substitute expensive items with top-rated free alternatives.",
+  "when_to_use": "When estimated trip cost exceeds the user's budget ceiling.",
+  "inputs": [
+    "draft_itinerary",
+    "total_budget",
+    "travelers_count"
+  ],
+  "process": [
+    "Sum admission fees, estimated local transit, and meal allowances.",
+    "Calculate budget variance: Delta = Estimated Cost - Target Budget.",
+    "If Delta > 0: Identify highest-cost paid sights with comparable free public landmarks (e.g. public promenades, palace exterior viewpoints, heritage gates).",
+    "Replace high-fee sights with top-rated free alternatives in the same geographic cluster.",
+    "Recalculate total cost and verify that budget variance is non-positive (Delta <= 0)."
+  ],
+  "tools": [
+    "Budget Itemizer",
+    "Free Sights Knowledge Base",
+    "Cost Variance Evaluator"
+  ],
+  "output": "Budget-compliant itinerary with breakdown of savings and cost categories."
+}

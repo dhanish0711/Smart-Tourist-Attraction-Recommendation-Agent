@@ -1,0 +1,23 @@
+{
+  "id": "destination_research",
+  "name": "Destination Research Skill",
+  "purpose": "Conduct deep, real-time research on destination attractions, historical background, and current conditions.",
+  "when_to_use": "Triggered during the initial planning phase for any new trip.",
+  "inputs": [
+    "destination",
+    "interests",
+    "travel_dates"
+  ],
+  "process": [
+    "Query Tavily AI search with filtered query: f'{destination} tourist attractions opening hours entry fee 2026'.",
+    "Extract candidate points of interest, categorizing into Heritage, Culture, Nature, Food, and Markets.",
+    "Verify opening days, admission fees, and current temporary closures.",
+    "Structure candidate POIs with GPS coordinates, indoor/outdoor flag, and typical visit duration."
+  ],
+  "tools": [
+    "Tavily AI Search",
+    "OpenStreetMap Nominatim",
+    "Wikipedia REST API"
+  ],
+  "output": "Structured list of candidate attractions with verified 2026 attributes."
+}

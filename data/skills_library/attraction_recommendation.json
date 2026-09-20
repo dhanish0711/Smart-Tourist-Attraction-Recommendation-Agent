@@ -1,0 +1,21 @@
+{
+  "id": "attraction_recommendation",
+  "name": "Attraction Recommendation Skill",
+  "purpose": "Score and rank candidate attractions using multi-attribute utility theory (MAUT) with transparent explainability.",
+  "when_to_use": "After candidate attractions are discovered, to select the best sights for the traveler.",
+  "inputs": [
+    "candidate_attractions",
+    "traveler_profile"
+  ],
+  "process": [
+    "Calculate 8-dimensional scores: Preference Match (30%), Rating (15%), Budget Fit (15%), Distance (10%), Time Fit (10%), Weather Fit (10%), Crowd Level (5%), Uniqueness (5%).",
+    "Compute weighted overall score (0-100%) and confidence index.",
+    "Generate human-readable explainability bullet points ('Why Recommended').",
+    "Filter top-ranked attractions matching daily capacity constraints."
+  ],
+  "tools": [
+    "Multi-Attribute Utility Scorer",
+    "Explainability Generator"
+  ],
+  "output": "Ranked list of scored attractions with detailed rationale and confidence scores."
+}

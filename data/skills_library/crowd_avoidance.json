@@ -1,0 +1,21 @@
+{
+  "id": "crowd_avoidance",
+  "name": "Crowd Avoidance Skill",
+  "purpose": "Analyze temporal congestion patterns to schedule popular monuments during low-density windows.",
+  "when_to_use": "For high-traffic monuments or when traveler dislikes heavy crowds.",
+  "inputs": [
+    "candidate_attractions",
+    "day_schedule"
+  ],
+  "process": [
+    "Identify high-traffic tier-1 monuments (e.g. Amber Fort, Hawa Mahal, Eiffel Tower).",
+    "Schedule primary monuments at opening window (08:30-09:15 AM) to beat tourist bus arrivals.",
+    "Shift secondary attractions to late afternoon lull (15:30-17:00).",
+    "Display crowd forecast badges (Low 🟢, Moderate 🟡, Peak 🔴) on timeline cards."
+  ],
+  "tools": [
+    "Temporal Crowd Predictor",
+    "Early Access Scheduler"
+  ],
+  "output": "Optimal arrival times avoiding peak ticketing and security queues."
+}

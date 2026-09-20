@@ -1,0 +1,23 @@
+{
+  "id": "weather_adaptation",
+  "name": "Weather Adaptation Skill",
+  "purpose": "Autonomously adapt daily schedules based on live weather forecasts (rain, storms, extreme heat).",
+  "when_to_use": "When Open-Meteo detects rain probability > 50% or temperatures > 34°C.",
+  "inputs": [
+    "daily_weather_forecast",
+    "draft_itinerary"
+  ],
+  "process": [
+    "Scan day forecast for precipitation (> 2.5 mm or rain probability > 50%).",
+    "Identify scheduled outdoor activities (open-air forts, gardens, walking tours).",
+    "Attempt slot-swap: move outdoor sights to a confirmed sunny day in the itinerary.",
+    "If swap impossible: replace outdoor sight with top-rated indoor museum, art gallery, or royal palace hall.",
+    "Tag affected day with 'Weather Adapted' badge and push update to traveler."
+  ],
+  "tools": [
+    "Open-Meteo Weather API",
+    "Indoor Sights Index",
+    "Slot Swapping Engine"
+  ],
+  "output": "Weather-resilient itinerary with indoor alternatives protecting against rain disruptions."
+}

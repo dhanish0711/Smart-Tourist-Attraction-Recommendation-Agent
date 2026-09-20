@@ -1,0 +1,21 @@
+{
+  "id": "food_discovery",
+  "name": "Food Discovery Skill",
+  "purpose": "Discover authentic culinary heritage and pair meals within walking distance of attractions.",
+  "when_to_use": "When food is a specified interest or during lunch/dinner scheduling.",
+  "inputs": [
+    "scheduled_attraction_coordinates",
+    "dietary_preferences"
+  ],
+  "process": [
+    "Search for authentic culinary institutions within 700m radius of morning/afternoon attractions.",
+    "Identify signature regional dishes (e.g. Dal Baati Churma, Pyaaz Kachori, Ghevar in Jaipur).",
+    "Filter venues for dietary compliance (Pure Vegetarian, Halal, Jain, Gluten-free).",
+    "Integrate meal stops directly into the daily timeline with estimated meal costs."
+  ],
+  "tools": [
+    "Culinary Geospatial Search",
+    "Dietary Filter Engine"
+  ],
+  "output": "Curated lunch and dinner stops closely paired with sightseeing locations."
+}

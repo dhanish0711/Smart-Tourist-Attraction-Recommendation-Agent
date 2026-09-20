@@ -1,0 +1,20 @@
+{
+  "id": "time_optimization",
+  "name": "Time Optimization Skill",
+  "purpose": "Allocate realistic dwell times and buffer intervals based on monument scale and category.",
+  "when_to_use": "During timetable construction for all trips.",
+  "inputs": [
+    "attraction_category",
+    "monument_scale"
+  ],
+  "process": [
+    "Apply category dwell standards: Massive Forts/Complexes (2.5-3.5h), Museums (2.0-2.5h), Photo Landmarks (30-45m), Gardens (1.0-1.5h), Bazaars (2.0h).",
+    "Insert 20-30 minute transit buffer between adjacent stops.",
+    "Prevent over-scheduling to ensure a relaxed, enjoyable experience without rushed checklists."
+  ],
+  "tools": [
+    "Dwell Time Standards",
+    "Transit Buffer Calculator"
+  ],
+  "output": "Accurate time-slotted itinerary preventing scheduling overruns."
+}

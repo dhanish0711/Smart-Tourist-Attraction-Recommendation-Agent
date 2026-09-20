@@ -1,0 +1,22 @@
+{
+  "id": "itinerary_validation",
+  "name": "Itinerary Validation Skill",
+  "purpose": "Perform rigorous constraint verification across budget, opening hours, travel times, and weather.",
+  "when_to_use": "Final phase before plan approval, and after any automated replanning iteration.",
+  "inputs": [
+    "trip_plan",
+    "traveler_constraints"
+  ],
+  "process": [
+    "Test 1 (Budget): Verify Total Estimated Cost <= User Budget Cap. If failed, trigger Budget Optimization Skill.",
+    "Test 2 (Hours): Verify every attraction is open on the designated day and slot. If failed, swap or shift day.",
+    "Test 3 (Transit): Verify no leg exceeds 40 minutes travel time. If failed, re-cluster geographically.",
+    "Test 4 (Weather): Verify no outdoor venues scheduled on heavy rain forecast days. If failed, trigger Weather Adaptation Skill.",
+    "Lock plan as 'APPROVED' only when all 4 hard constraints pass simultaneously."
+  ],
+  "tools": [
+    "Constraint Verification Engine",
+    "Self-Correction Loop Orchestrator"
+  ],
+  "output": "Validation report and approval seal, or trigger of autonomous replan loop."
+}

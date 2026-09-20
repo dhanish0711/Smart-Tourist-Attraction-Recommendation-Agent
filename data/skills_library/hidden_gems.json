@@ -1,0 +1,21 @@
+{
+  "id": "hidden_gems",
+  "name": "Hidden Gem Discovery Skill",
+  "purpose": "Unearth authentic, off-the-beaten-path cultural landmarks that typical tourist buses miss.",
+  "when_to_use": "When user activates 'Hidden Gems' toggle or requests non-touristy spots.",
+  "inputs": [
+    "destination",
+    "candidate_attractions"
+  ],
+  "process": [
+    "Query Tavily with anti-tourist-trap prompt: f'{destination} hidden gems off the beaten path secret viewpoints artisan workshops'.",
+    "Filter for sights with high ratings (> 4.3) but lower review counts (under 1,500 reviews).",
+    "Verify road accessibility and daytime safety.",
+    "Substitute 1 mainstream crowded sight per day with an authentic artisan quarter or historic stepwell."
+  ],
+  "tools": [
+    "Tavily Web Search",
+    "Crowd Ratio Analyzer"
+  ],
+  "output": "Inclusion of authentic hidden architectural wonders and local artisan centers."
+}

@@ -1,0 +1,21 @@
+{
+  "id": "accessibility_planning",
+  "name": "Accessibility Planning Skill",
+  "purpose": "Ensure physical comfort for travelers with limited mobility, strollers, or wheelchair needs.",
+  "when_to_use": "When walking tolerance is 'Low' or wheelchair/stroller needs are flagged.",
+  "inputs": [
+    "traveler_profile",
+    "candidate_attractions"
+  ],
+  "process": [
+    "Filter venues for ramp access, elevators, and paved pathways.",
+    "Flag fort ramparts requiring steep stair climbs and provide battery-car/golf-cart shuttle advice.",
+    "Cap walking segments to under 500 meters between drop-off points.",
+    "Include rest bench notes in venue descriptions."
+  ],
+  "tools": [
+    "Mobility Index",
+    "Elevation Profile Checker"
+  ],
+  "output": "Accessible travel plan with minimal stair climbing and shuttle instructions."
+}

@@ -1,0 +1,21 @@
+{
+  "id": "couple_planning",
+  "name": "Couple Trip Planning Skill",
+  "purpose": "Curate romantic, unhurried experiences with scenic sunset views and intimate dining.",
+  "when_to_use": "When group type is 'Couple' or honeymoon.",
+  "inputs": [
+    "traveler_profile",
+    "candidate_attractions"
+  ],
+  "process": [
+    "Schedule unhurried afternoon pacing with scenic panoramic viewpoints.",
+    "Anchor evening slot specifically around sunset (17:30-18:45) at historic lakes or hill viewpoints.",
+    "Pair evening schedule with candlelit heritage courtyard dinners.",
+    "Avoid loud, commercial amusement parks unless explicitly requested."
+  ],
+  "tools": [
+    "Golden Hour Calculator",
+    "Romantic Venues Index"
+  ],
+  "output": "Atmospheric itinerary featuring sunset vistas and heritage dining."
+}

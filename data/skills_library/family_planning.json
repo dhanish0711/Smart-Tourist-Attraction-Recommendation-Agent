@@ -1,0 +1,21 @@
+{
+  "id": "family_planning",
+  "name": "Family Trip Planning Skill",
+  "purpose": "Tailor schedules for families with children or seniors, focusing on low fatigue, pacing, and interactive venues.",
+  "when_to_use": "When group type is 'Family' or group contains children/seniors.",
+  "inputs": [
+    "traveler_profile",
+    "candidate_attractions"
+  ],
+  "process": [
+    "Enforce pacing rule: maximum 3 major sightseeing stops per day.",
+    "Insert mandatory 90-minute sit-down lunch break between 12:30 and 14:00.",
+    "Filter out steep, strenuous climbs without vehicle access.",
+    "Prioritize sights with interactive appeal (science centers, puppet shows, royal armories, boat rides)."
+  ],
+  "tools": [
+    "Fatigue Curve Calculator",
+    "Family Venue Scorer"
+  ],
+  "output": "Family-friendly itinerary with gentle pacing and child-approved sights."
+}

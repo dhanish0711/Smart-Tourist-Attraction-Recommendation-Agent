@@ -1,0 +1,22 @@
+{
+  "id": "route_optimization",
+  "name": "Route Optimization Skill",
+  "purpose": "Minimize travel time, distance, and transit expense by solving the Traveling Salesperson Problem (TSP).",
+  "when_to_use": "When sequencing sights within each day to eliminate cross-city backtracking.",
+  "inputs": [
+    "day_attractions",
+    "hotel_starting_point"
+  ],
+  "process": [
+    "Calculate pairwise Haversine geodesic distance matrix between all sights.",
+    "Apply greedy nearest-neighbor TSP heuristic to find optimal visitation sequence (A -> B -> C -> D).",
+    "Calculate estimated transit times and recommend optimal transit mode (Walking vs. Metro vs. Auto vs. Taxi).",
+    "Estimate per-leg transit fares and carbon footprint (kg CO2)."
+  ],
+  "tools": [
+    "Haversine Distance Matrix",
+    "TSP Nearest-Neighbor Solver",
+    "Transit Cost Estimator"
+  ],
+  "output": "Optimized visitation sequence with minimized total km and transit fare estimates."
+}

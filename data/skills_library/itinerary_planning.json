@@ -1,0 +1,23 @@
+{
+  "id": "itinerary_planning",
+  "name": "Itinerary Planning Skill",
+  "purpose": "Synthesize recommended attractions into a balanced, time-slotted day-by-day travel schedule.",
+  "when_to_use": "When converting ranked attractions into actionable daily plans.",
+  "inputs": [
+    "ranked_attractions",
+    "duration_days",
+    "travel_style",
+    "group_type"
+  ],
+  "process": [
+    "Assign daily themes (e.g. Day 1: Royal Heritage; Day 2: Crafts & Culture; Day 3: Scenic Vistas).",
+    "Structure daily slots: Morning (09:00-12:30), Lunch (12:30-14:00), Afternoon (14:00-17:00), Evening (17:00-19:30), Dinner (19:30-21:30).",
+    "Respect opening and closing hours for each scheduled venue.",
+    "Allocate buffer times between activities to prevent traveler exhaustion."
+  ],
+  "tools": [
+    "Time Slot Allocator",
+    "Opening Hours Checker"
+  ],
+  "output": "Draft day-by-day timetable with assigned morning, afternoon, and evening venues."
+}

@@ -1,0 +1,21 @@
+{
+  "id": "solo_travel",
+  "name": "Solo Trip Planning Skill",
+  "purpose": "Maximize flexibility, vibrant social atmosphere, and photographic opportunities for solo adventurers.",
+  "when_to_use": "When traveler group size is 1.",
+  "inputs": [
+    "traveler_profile",
+    "candidate_attractions"
+  ],
+  "process": [
+    "Increase activity capacity to 4-5 dynamic stops per day.",
+    "Incorporate vibrant walking heritage corridors, rooftop cafes, and photography viewpoints.",
+    "Schedule golden-hour timing for iconic architectural facades.",
+    "Highlight safety tips and public transit accessibility for independent travelers."
+  ],
+  "tools": [
+    "Solo Pacing Engine",
+    "Social Spots Index"
+  ],
+  "output": "Fast-paced, vibrant itinerary optimized for solo discovery and photography."
+}
