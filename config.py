@@ -45,11 +45,11 @@ class Settings(BaseSettings):
     # Checks N8N_TUNNEL_URL, then cloud platform URL (Render), then localhost fallback
     @property
     def PUBLIC_BASE_URL(self) -> str:
-        if self.N8N_TUNNEL_URL:
-            return self.N8N_TUNNEL_URL.rstrip("/")
         render_url = os.getenv("RENDER_EXTERNAL_URL", "")
         if render_url:
             return render_url.rstrip("/")
+        if self.N8N_TUNNEL_URL:
+            return self.N8N_TUNNEL_URL.rstrip("/")
         return f"http://127.0.0.1:{self.PORT}"
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
