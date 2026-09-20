@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Tourist Attraction Recommendation Agent • Agentic AI & RAG</title>
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <!-- Custom Modern Design System -->
+  <link rel="stylesheet" href="/static/css/styles.css" />
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Top Navigation / App Header -->
+    <header class="app-navbar">
+      <div class="brand-section">
+        <div class="brand-icon-box">🌍</div>
+        <div>
+          <h1 class="brand-title">Smart Tourist Attraction Recommendation Agent</h1>
+          <div class="brand-subtitle">
+            <span>Skill-Augmented Agentic AI 2.0</span>
+            <span>•</span>
+            <span>Persistent ChromaDB RAG</span>
+            <span>•</span>
+            <span>Global POI Engine</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="system-status-pills">
+        <span class="live-pill active">
+          <span class="live-indicator-dot"></span> ChromaDB Vector
+        </span>
+        <span class="live-pill active">
+          <span class="live-indicator-dot"></span> Open-Meteo Live
+        </span>
+        <span class="live-pill active">
+          <span class="live-indicator-dot"></span> Global Nominatim
+        </span>
+        <span class="live-pill active">
+          <span class="live-indicator-dot"></span> n8n Webhook Ready
+        </span>
+        <a id="langflow-header-link" href="http://127.0.0.1:7860/flow/966418b4-6892-4e7d-bc99-077df36cc3f9" target="_blank" style="text-decoration: none;">
+          <span class="live-pill active" style="background: rgba(139, 92, 246, 0.15); border-color: rgba(139, 92, 246, 0.4); color: #a78bfa; cursor: pointer;">
+            <span class="live-indicator-dot" style="background: #a78bfa; box-shadow: 0 0 8px #a78bfa;"></span> Langflow Flow: Online
+          </span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Two-Column Layout -->
+    <main class="app-grid">
+      <!-- Left Rail: Traveler Intake Studio -->
+      <aside class="control-panel">
+        <div class="panel-header">
+          <div>
+            <div class="panel-title">🎯 Travel Intake Studio</div>
+            <div class="panel-subtitle">Configure traveler profile & constraints</div>
+          </div>
+        </div>
+
+        <form id="trip-form" class="form-section">
+          <!-- Destination Field with Quick Picks -->
+          <div>
+            <label class="input-label" for="destination">
+              📍 Destination <span class="sub">(Any place globally)</span>
+            </label>
+            <div class="input-text-wrap">
+              <span class="input-icon-left">🔍</span>
+              <input type="text" id="destination" name="destination" class="form-input" value="" placeholder="e.g. Tokyo, Rome, Khatoo, Ujjain, Zermatt, Cusco, Cairo, Reykjavik..." required />
+            </div>
+            <div class="quick-chips-row">
+              <span style="font-size: 0.72rem; color: var(--slate-400); font-weight: 600;">Worldwide:</span>
+              <button type="button" class="quick-chip" onclick="selectDestination('Ujjain')">🛕 Ujjain</button>
+              <button type="button" class="quick-chip" onclick="selectDestination('Khatoo')">🙏 Khatoo</button>
+              <button type="button" class="quick-chip" onclick="selectDestination('Kyoto')">⛩️ Kyoto</button>
+              <button type="button" class="quick-chip" onclick="selectDestination('Rome')">🏛️ Rome</button>
+              <button type="button" class="quick-chip" onclick="selectDestination('Zermatt')">🏔️ Zermatt</button>
+              <button type="button" class="quick-chip" onclick="selectDestination('Paris')">🗼 Paris</button>
+            </div>
+          </div>
+
+          <!-- Group Profile Archetype (Visual Radio Cards) -->
+          <div>
+            <label class="input-label">👨‍👩‍👧‍👦 Travel Archetype</label>
+            <div class="archetype-grid">
+              <label class="archetype-card selected" id="card-family">
+                <input type="radio" name="archetype" value="Family (Kids/Seniors)" checked onchange="updateArchetype(this)" />
+                <span class="archetype-icon">👨‍👩‍👧</span>
+                <div class="archetype-info">
+                  <span class="archetype-title">Family</span>
+                  <span class="archetype-sub">Kids & Seniors safe</span>
+                </div>
+              </label>
+
+              <label class="archetype-card" id="card-couple">
+                <input type="radio" name="archetype" value="Couple" onchange="updateArchetype(this)" />
+                <span class="archetype-icon">💑</span>
+                <div class="archetype-info">
+                  <span class="archetype-title">Couple</span>
+                  <span class="archetype-sub">Romantic & scenic</span>
+                </div>
+              </label>
+
+              <label class="archetype-card" id="card-solo">
+                <input type="radio" name="archetype" value="Solo" onchange="updateArchetype(this)" />
+                <span class="archetype-icon">🎒</span>
+                <div class="archetype-info">
+                  <span class="archetype-title">Solo</span>
+                  <span class="archetype-sub">Culture & budget</span>
+                </div>
+              </label>
+
+              <label class="archetype-card" id="card-friends">
+                <input type="radio" name="archetype" value="Friends" onchange="updateArchetype(this)" />
+                <span class="archetype-icon">👥</span>
+                <div class="archetype-info">
+                  <span class="archetype-title">Friends</span>
+                  <span class="archetype-sub">High energy & food</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Duration & Travelers Count (Modern Steppers) -->
+          <div class="form-grid-2">
+            <div>
+              <label class="input-label" for="duration">📅 Duration (Days)</label>
+              <div class="stepper-wrap">
+                <button type="button" class="stepper-btn" onclick="stepNumber('duration', -1)">−</button>
+                <input type="number" id="duration" class="stepper-input" value="3" min="1" max="7" readonly />
+                <button type="button" class="stepper-btn" onclick="stepNumber('duration', 1)">+</button>
+              </div>
+            </div>
+
+            <div>
+              <label class="input-label" for="travelers">👥 Travelers</label>
+              <div class="stepper-wrap">
+                <button type="button" class="stepper-btn" onclick="stepNumber('travelers', -1)">−</button>
+                <input type="number" id="travelers" class="stepper-input" value="4" min="1" max="12" readonly />
+                <button type="button" class="stepper-btn" onclick="stepNumber('travelers', 1)">+</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Budget & Currency -->
+          <div>
+            <label class="input-label" for="budget">💰 Budget Cap</label>
+            <div class="budget-group">
+              <select id="currency" class="currency-select">
+                <option value="₹" selected>₹ INR</option>
+                <option value="$">$ USD</option>
+                <option value="€">€ EUR</option>
+                <option value="£">£ GBP</option>
+              </select>
+              <input type="number" id="budget" class="budget-input" value="15000" step="500" />
+            </div>
+          </div>
+
+          <!-- Key Interests (Clickable Tag Chips) -->
+          <div>
+            <label class="input-label">❤️ Key Interests <span class="sub">(Select all that apply)</span></label>
+            <div class="interest-chips-grid">
+              <label class="interest-tag active" onclick="toggleTag(this)">
+                <input type="checkbox" name="interests" value="History" checked />
+                <span>🏰 History</span>
+              </label>
+              <label class="interest-tag active" onclick="toggleTag(this)">
+                <input type="checkbox" name="interests" value="Food" checked />
+                <span>🍲 Street Food</span>
+              </label>
+              <label class="interest-tag active" onclick="toggleTag(this)">
+                <input type="checkbox" name="interests" value="Palaces" checked />
+                <span>👑 Palaces</span>
+              </label>
+              <label class="interest-tag" onclick="toggleTag(this)">
+                <input type="checkbox" name="interests" value="Shopping" />
+                <span>🛍️ Bazaars</span>
+              </label>
+              <label class="interest-tag" onclick="toggleTag(this)">
+                <input type="checkbox" name="interests" value="Nature" />
+                <span>🌿 Nature</span>
+              </label>
+              <label class="interest-tag" onclick="toggleTag(this)">
+                <input type="checkbox" name="interests" value="Hidden Gems" />
+                <span>💎 Hidden Gems</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Walking Tolerance & Travel Pace -->
+          <div class="form-grid-2">
+            <div>
+              <label class="input-label" for="walking">🚶 Walking</label>
+              <select id="walking" class="form-input" style="padding-left: 0.85rem;">
+                <option value="Low">Low (Minimal)</option>
+                <option value="Medium" selected>Medium</option>
+                <option value="High">High (Active)</option>
+              </select>
+            </div>
+            <div>
+              <label class="input-label" for="pace">⏱️ Pace</label>
+              <select id="pace" class="form-input" style="padding-left: 0.85rem;">
+                <option value="Relaxed" selected>Relaxed</option>
+                <option value="Moderate">Moderate</option>
+                <option value="Intensive">Intensive</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Hidden Gems Toggle -->
+          <div class="toggle-row" onclick="document.getElementById('hidden-gems').click()">
+            <div class="toggle-label-wrap">
+              <span>💎</span>
+              <div>
+                <div class="toggle-title">Offbeat Hidden Gems</div>
+                <div class="toggle-desc">Boost local secret spots over tourist traps</div>
+              </div>
+            </div>
+            <label class="switch" onclick="event.stopPropagation()">
+              <input type="checkbox" id="hidden-gems" />
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <!-- Submit CTA Button -->
+          <button type="submit" id="submit-btn" class="cta-button">
+            <span>🚀 Launch Autonomous Travel Agent</span>
+          </button>
+        </form>
+      </aside>
+
+      <!-- Right Area: Multi-Agent Workspace & Deliverables -->
+      <section>
+        <!-- Agent Live Pulse / Radar Card -->
+        <div class="agent-radar-card">
+          <div class="radar-top-row">
+            <div class="radar-agent-badge">
+              <span class="pulse-ring"></span>
+              <span>Active Agent: <strong id="radar-agent-name" style="color: var(--primary);">Orchestrator Agent</strong></span>
+            </div>
+            <span id="radar-step-count" class="radar-step-pill">System Ready</span>
+          </div>
+          <div id="radar-message" class="radar-message">
+            System initialized with 15 procedural travel skills in ChromaDB. Configure your profile on the left and click <b>'Launch Autonomous Travel Agent'</b>.
+          </div>
+          <div id="radar-skills" class="radar-skills-row">
+            <span class="skill-tag">⚡ Destination Research Skill</span>
+            <span class="skill-tag">⚡ ChromaDB Vector RAG</span>
+            <span class="skill-tag">⚡ Open-Meteo Weather Tool</span>
+          </div>
+        </div>
+
+        <!-- Modern Segmented Workspace Tabs -->
+        <nav class="workspace-tabs">
+          <button class="nav-tab-item active" data-tab="tab-timeline">
+            <span>📅</span> Itinerary Timetable
+          </button>
+          <button class="nav-tab-item" data-tab="tab-map">
+            <span>🗺️</span> Interactive Map
+          </button>
+          <button class="nav-tab-item" data-tab="tab-rag">
+            <span>🔍</span> ChromaDB Vector RAG
+          </button>
+          <button class="nav-tab-item" data-tab="tab-n8n">
+            <span>⚡</span> n8n Automation
+          </button>
+          <button class="nav-tab-item" data-tab="tab-disruption">
+            <span>⚠️</span> Disruption Simulator
+          </button>
+          <button class="nav-tab-item" data-tab="tab-survival">
+            <span>🧭</span> Survival Kit
+          </button>
+          <button class="nav-tab-item" data-tab="tab-export">
+            <span>📥</span> Export Dossier
+          </button>
+        </nav>
+
+        <!-- Tab 1: Itinerary Timetable -->
+        <div class="tab-pane active" id="tab-timeline">
+          <div id="timeline-container">
+            <div class="empty-state-box">
+              <div class="empty-state-icon">🗺️</div>
+              <div class="empty-state-title">Ready for Your Next Journey</div>
+              <div class="empty-state-text">
+                Select your destination and preferences on the left rail, then click <b>'Launch Autonomous Travel Agent'</b> to generate your weather-verified, multi-agent itinerary!
+              </div>
+              <div class="quick-chips-row" style="justify-content: center; margin-top: 0.5rem;">
+                <button type="button" class="quick-chip" onclick="quickLaunch('Jaipur', 'Family (Kids/Seniors)')">Try Jaipur Family Trip</button>
+                <button type="button" class="quick-chip" onclick="quickLaunch('Manali', 'Solo')">Try Manali Solo Trip</button>
+                <button type="button" class="quick-chip" onclick="quickLaunch('Kyoto', 'Couple')">Try Kyoto Couple Trip</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Leaflet Map -->
+        <div class="tab-pane" id="tab-map">
+          <div class="map-wrapper">
+            <div class="map-toolbar">
+              <div style="font-weight: 700; font-size: 0.95rem; color: var(--slate-800);">
+                📍 Geographic Tour Visualization
+              </div>
+              <div id="map-stats" style="font-size: 0.8rem; color: var(--slate-500);">
+                Generate a trip to view optimized route paths & attraction pins.
+              </div>
+            </div>
+            <div id="leaflet-map-container"></div>
+          </div>
+        </div>
+
+        <!-- Tab 3: ChromaDB Vector RAG Explorer -->
+        <div class="tab-pane" id="tab-rag">
+          <div class="rag-card">
+            <div class="panel-title" style="margin-bottom: 0.4rem;">
+              🔍 Interactive ChromaDB Vector RAG Explorer
+            </div>
+            <p style="font-size: 0.84rem; color: var(--slate-500); margin-bottom: 1.25rem;">
+              Query the persistent ChromaDB vector store directly. Test semantic cosine similarity retrieval across 15 procedural planning skills and dynamically ingested tourism knowledge!
+            </p>
+
+            <form id="rag-query-form" class="rag-search-box">
+              <input type="text" id="rag-query-input" class="form-input" style="padding-left: 1rem;" placeholder="Ask RAG (e.g. 'How to pace family trips with kids?' or 'Budget reduction skill')" value="How to pace family trips with kids" />
+              <button type="submit" class="cta-button" style="width: auto; padding: 0.65rem 1.35rem; white-space: nowrap;">Query RAG</button>
+            </form>
+
+            <div class="quick-chips-row" style="margin-bottom: 1rem;">
+              <span style="font-size: 0.72rem; color: var(--slate-400); font-weight: 600;">Sample Prompts:</span>
+              <button type="button" class="quick-chip" onclick="setRagQuery('How to pace family trips with kids')">Family Pacing</button>
+              <button type="button" class="quick-chip" onclick="setRagQuery('How to reduce trip budget when overspending')">Budget Optimization</button>
+              <button type="button" class="quick-chip" onclick="setRagQuery('How to avoid morning crowds at tourist spots')">Crowd Avoidance</button>
+              <button type="button" class="quick-chip" onclick="setRagQuery('Weather adaptation when rain is forecasted')">Rain Adaptation</button>
+            </div>
+
+            <div id="rag-results-container" class="rag-results-grid"></div>
+          </div>
+        </div>
+
+        <!-- Tab 4: n8n Automation Console -->
+        <div class="tab-pane" id="tab-n8n">
+          <div class="rag-card">
+            <div class="panel-title" style="margin-bottom: 0.4rem;">
+              ⚡ n8n Automated Travel Monitoring & Webhook Pipeline
+            </div>
+            <p style="font-size: 0.84rem; color: var(--slate-500); margin-bottom: 1.25rem;">
+              Our n8n automation workflow continuously monitors active trips. Every morning at 7:00 AM, it queries Open-Meteo for real-time weather risks. If precipitation exceeds 50%, it autonomously triggers our FastAPI replanning webhook!
+            </p>
+
+            <!-- Visual Workflow Pipeline -->
+            <div class="n8n-pipeline-container">
+              <div class="n8n-node" id="n8n-node-cron">
+                <div class="n8n-node-icon">🕒</div>
+                <div class="n8n-node-title">Morning Cron</div>
+                <div class="n8n-node-sub">Daily 07:00 AM</div>
+              </div>
+              <div class="n8n-node-connector">➔</div>
+              <div class="n8n-node" id="n8n-node-weather">
+                <div class="n8n-node-icon">🌦️</div>
+                <div class="n8n-node-title">Open-Meteo Node</div>
+                <div class="n8n-node-sub">Rain Risk % Check</div>
+              </div>
+              <div class="n8n-node-connector">➔</div>
+              <div class="n8n-node" id="n8n-node-if">
+                <div class="n8n-node-icon">❓</div>
+                <div class="n8n-node-title">IF Condition</div>
+                <div class="n8n-node-sub">Rain >= 50% ?</div>
+              </div>
+              <div class="n8n-node-connector">➔</div>
+              <div class="n8n-node" id="n8n-node-webhook">
+                <div class="n8n-node-icon">⚡</div>
+                <div class="n8n-node-title">FastAPI Webhook</div>
+                <div class="n8n-node-sub">POST /api/replan</div>
+              </div>
+              <div class="n8n-node-connector">➔</div>
+              <div class="n8n-node" id="n8n-node-alert">
+                <div class="n8n-node-icon">📲</div>
+                <div class="n8n-node-title">Notification</div>
+                <div class="n8n-node-sub">Send Replan Alert</div>
+              </div>
+            </div>
+
+            <button type="button" id="btn-n8n-simulate" class="cta-button" style="width: auto; margin-bottom: 1.25rem;">
+              <span>🚀 Trigger Simulated n8n Morning Check Webhook</span>
+            </button>
+
+            <div id="n8n-result-card" style="display: none; background: var(--slate-50); border: 1.5px solid var(--slate-200); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1rem;">
+              <div style="font-weight: 800; font-size: 0.95rem; color: var(--slate-900); margin-bottom: 0.4rem;" id="n8n-status-title">
+                Webhook Response Received
+              </div>
+              <div style="font-size: 0.84rem; color: var(--slate-600); line-height: 1.45;" id="n8n-status-desc"></div>
+            </div>
+
+            <details style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--slate-500); cursor: pointer;">
+              <summary>View Raw JSON Payload</summary>
+              <pre id="n8n-output-json" style="background: var(--slate-900); color: #38BDF8; padding: 1rem; border-radius: var(--radius-md); font-size: 0.75rem; overflow-x: auto; margin-top: 0.5rem; max-height: 250px;">Click the button above to simulate the incoming n8n webhook.</pre>
+            </details>
+          </div>
+        </div>
+
+        <!-- Tab 5: Disruption Simulator -->
+        <div class="tab-pane" id="tab-disruption">
+          <div class="rag-card">
+            <div class="panel-title" style="margin-bottom: 0.4rem;">
+              ⚠️ Test the Autonomous Self-Correction Feedback Loop
+            </div>
+            <p style="font-size: 0.84rem; color: var(--slate-500); margin-bottom: 1.25rem;">
+              Simulate unforeseen real-world travel shocks. Watch our multi-agent validation engine detect constraint violations, query procedural skills from ChromaDB, and autonomously restructure the plan!
+            </p>
+
+            <div class="scenario-grid">
+              <div class="scenario-card">
+                <div>
+                  <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">⛈️</div>
+                  <div style="font-weight: 800; font-size: 0.95rem; color: var(--slate-900);">Monsoon Rain Alert</div>
+                  <p style="font-size: 0.8rem; color: var(--slate-500); margin-top: 0.35rem;">
+                    Simulates 80% heavy precipitation on Day 2. The agent automatically detects outdoor exposure and swaps outdoor forts/lakes with indoor heritage palaces and museums.
+                  </p>
+                </div>
+                <button type="button" id="btn-sim-rain" class="cta-button" style="background: #2563EB;">
+                  <span>Trigger Rain Replan</span>
+                </button>
+              </div>
+
+              <div class="scenario-card">
+                <div>
+                  <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">💸</div>
+                  <div style="font-weight: 800; font-size: 0.95rem; color: var(--slate-900);">25% Budget Reduction</div>
+                  <p style="font-size: 0.8rem; color: var(--slate-500); margin-top: 0.35rem;">
+                    Simulates an emergency budget restriction. The agent identifies highest-fee admission tickets and substitutes them with top-rated free public heritage viewpoints and gates.
+                  </p>
+                </div>
+                <button type="button" id="btn-sim-budget" class="cta-button" style="background: #059669;">
+                  <span>Trigger Budget Replan</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 6: Survival Kit -->
+        <div class="tab-pane" id="tab-survival">
+          <div id="survival-kit-container">
+            <div class="empty-state-box">
+              <div class="empty-state-icon">🧭</div>
+              <div class="empty-state-title">Cultural Survival Kit & Contacts</div>
+              <div class="empty-state-text">
+                Generate a trip plan to view local language phonetic cards, cultural etiquette guidelines, and verified local emergency contacts!
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 7: Export Dossier -->
+        <div class="tab-pane" id="tab-export">
+          <div class="rag-card">
+            <div class="panel-title" style="margin-bottom: 0.4rem;">
+              📥 1-Click Export Dock
+            </div>
+            <p style="font-size: 0.84rem; color: var(--slate-500); margin-bottom: 1.5rem;">
+              Export your validated travel plan directly to your mobile calendar or download a high-resolution printable travel dossier.
+            </p>
+
+            <div class="scenario-grid">
+              <div class="scenario-card">
+                <div>
+                  <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">📅</div>
+                  <div style="font-weight: 800; font-size: 0.95rem; color: var(--slate-900);">iCalendar (.ics) Sync</div>
+                  <p style="font-size: 0.8rem; color: var(--slate-500); margin-top: 0.35rem;">
+                    Sync all time slots, exact geo-coordinates, and departure reminder alarms into Google Calendar, Apple Calendar, or Outlook.
+                  </p>
+                </div>
+                <a id="download-ics-btn" class="cta-button" style="text-decoration: none;" href="#" download>
+                  <span>📅 Download .ics Calendar</span>
+                </a>
+              </div>
+
+              <div class="scenario-card">
+                <div>
+                  <div style="font-size: 1.75rem; margin-bottom: 0.5rem;">📄</div>
+                  <div style="font-weight: 800; font-size: 0.95rem; color: var(--slate-900);">Printable PDF Travel Dossier</div>
+                  <p style="font-size: 0.8rem; color: var(--slate-500); margin-top: 0.35rem;">
+                    Full ReportLab PDF booklet with itemized expense breakdown, daily schedule tables, emergency numbers, and offline survival tips.
+                  </p>
+                </div>
+                <a id="download-pdf-btn" class="cta-button" style="background: var(--slate-900); text-decoration: none;" href="#" download>
+                  <span>📄 Download PDF Dossier</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </main>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Application JS -->
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
