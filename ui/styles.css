@@ -1,0 +1,158 @@
+/* Modern Travel Agent Luxury Theme */
+:root {
+  --primary: #1E3A8A;
+  --primary-light: #3B82F6;
+  --accent: #10B981;
+  --bg-subtle: #F8FAFC;
+  --text-dark: #0F172A;
+  --card-border: #E2E8F0;
+}
+
+body, .gradio-container {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+  background-color: #F8FAFC !important;
+}
+
+/* Header Banner */
+.travel-header {
+  background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 50%, #2563EB 100%);
+  color: white;
+  padding: 2rem 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px -5px rgba(30, 58, 138, 0.25);
+  margin-bottom: 1.5rem;
+}
+
+.travel-header h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.travel-header p {
+  color: #93C5FD;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+
+/* Agent Radar Pulse Box */
+.agent-radar-box {
+  background: white;
+  border: 1px solid var(--card-border);
+  border-left: 5px solid #2563EB;
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.radar-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.pulse-dot {
+  width: 12px;
+  height: 12px;
+  background-color: #10B981;
+  border-radius: 50%;
+  box-shadow: 0 0 0 rgba(16, 185, 129, 0.4);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+/* Timeline Cards */
+.timeline-card {
+  background: white;
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.timeline-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.06);
+  border-color: #CBD5E1;
+}
+
+.slot-badge {
+  display: inline-block;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-right: 0.5rem;
+}
+
+.slot-morning { background: #DBEAFE; color: #1E40AF; }
+.slot-lunch { background: #FEF3C7; color: #92400E; }
+.slot-afternoon { background: #E0E7FF; color: #3730A3; }
+.slot-evening { background: #FCE7F3; color: #9D174D; }
+.slot-dinner { background: #DCFCE7; color: #166534; }
+
+/* Skill Badges */
+.skill-badge {
+  background: #F1F5F9;
+  border: 1px solid #CBD5E1;
+  color: #334155;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* Audio Guide Button */
+.audio-guide-btn {
+  background: #EFF6FF;
+  color: #1D4ED8;
+  border: 1px solid #BFDBFE;
+  padding: 0.35rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: background 0.15s;
+}
+
+.audio-guide-btn:hover {
+  background: #DBEAFE;
+}
+
+/* Metric Pills */
+.metric-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+  color: #64748B;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+}
