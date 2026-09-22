@@ -17,6 +17,7 @@ class TravelerProfile(BaseModel):
     travel_style: str = Field(default="Relaxed", description="Relaxed, Moderate, Intensive")
     dietary_preferences: Optional[str] = Field(default="None", description="Dietary restrictions/preferences")
     hidden_gems_preference: bool = Field(default=False, description="Prioritize lesser-known places")
+    email: Optional[str] = Field(default="dhanishladwani@gmail.com", description="Traveler email for n8n alerts and document exports")
 
 
 class Attraction(BaseModel):

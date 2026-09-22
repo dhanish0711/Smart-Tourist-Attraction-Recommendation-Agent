@@ -62,6 +62,7 @@ def plan_trip_endpoint(profile: TravelerProfile):
     if settings.N8N_WEBHOOK_URL:
         def _notify_n8n():
             try:
+                traveler_email = getattr(trip_plan.profile, "email", None) or "dhanishladwani@gmail.com"
                 httpx.post(
                     settings.N8N_WEBHOOK_URL,
                     json={
@@ -70,10 +71,11 @@ def plan_trip_endpoint(profile: TravelerProfile):
                         "destination": trip_plan.profile.destination,
                         "duration_days": trip_plan.profile.duration_days,
                         "budget": trip_plan.profile.budget,
-                        "email": "traveler@example.com",
+                        "email": traveler_email,
+                        "traveler_email": traveler_email,
                         "source": "Smart Tourist Attraction Recommendation Agent"
                     },
-                    timeout=6.0
+                    timeout=8.0
                 )
             except Exception:
                 pass
@@ -222,7 +224,7 @@ def n8n_config_endpoint():
 class TriggerCloudRequest(BaseModel):
     destination: str = "Jaipur"
     trip_id: Optional[str] = ""
-    email: Optional[str] = "traveler@example.com"
+    email: Optional[str] = "dhanishladwani@gmail.com"
 
 
 @app.post("/api/n8n/trigger-cloud")
@@ -234,11 +236,13 @@ def trigger_cloud_n8n_webhook(req: TriggerCloudRequest):
     if not webhook_url:
         raise HTTPException(status_code=400, detail="No N8N_WEBHOOK_URL configured")
     try:
+        target_email = req.email or "dhanishladwani@gmail.com"
         payload = {
             "event": "on_demand_trip_monitor",
             "destination": req.destination,
             "trip_id": req.trip_id or "trip_live",
-            "email": req.email or "traveler@example.com",
+            "email": target_email,
+            "traveler_email": target_email,
             "source": "Smart Tourist Attraction Recommendation Agent"
         }
         resp = httpx.post(webhook_url, json=payload, timeout=12.0)
@@ -251,7 +255,8 @@ def trigger_cloud_n8n_webhook(req: TriggerCloudRequest):
             "status": "success",
             "n8n_status_code": resp.status_code,
             "n8n_response": resp_data,
-            "webhook_url": webhook_url
+            "webhook_url": webhook_url,
+            "recipient": target_email
         }
     except Exception as e:
         return {"status": "error", "error": str(e), "webhook_url": webhook_url}

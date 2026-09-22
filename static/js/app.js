@@ -121,6 +121,8 @@ function setupForm() {
       interests.push(cb.value);
     });
 
+    const travelerEmail = document.getElementById("traveler-email")?.value.trim() || "dhanishladwani@gmail.com";
+
     const payload = {
       destination,
       duration_days: duration,
@@ -131,7 +133,8 @@ function setupForm() {
       interests: interests.length ? interests : ["History", "Food"],
       walking_tolerance: walking,
       travel_style: pace,
-      hidden_gems_preference: hiddenGems
+      hidden_gems_preference: hiddenGems,
+      email: travelerEmail
     };
 
     const submitBtn = document.getElementById("submit-btn");
@@ -660,6 +663,7 @@ function setupN8NSimulator() {
     cloudBtn.addEventListener("click", async () => {
       animateNodes();
       const outputBox = document.getElementById("n8n-output-json");
+      const travelerEmail = document.getElementById("traveler-email")?.value || "dhanishladwani@gmail.com";
       outputBox.textContent = "⚡ Dispatching live event to n8n Cloud (https://dhanish0711.app.n8n.cloud/webhook/trip-monitor)...";
 
       try {
@@ -667,7 +671,11 @@ function setupN8NSimulator() {
         const resp = await fetch("/api/n8n/trigger-cloud", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ destination: destInput, trip_id: "trip_live" })
+          body: JSON.stringify({
+            destination: destInput,
+            trip_id: currentTripData ? currentTripData.trip_id : "trip_live",
+            email: travelerEmail
+          })
         });
         const data = await resp.json();
 
@@ -681,10 +689,54 @@ function setupN8NSimulator() {
             card.style.display = "block";
             if (data.status === "success") {
               title.innerHTML = `⚡ <span style="color: #059669;">n8n Cloud Webhook Triggered!</span>`;
-              desc.innerHTML = `<b>Target Webhook:</b> <code>${data.webhook_url}</code><br/><b>n8n Response:</b> HTTP ${data.n8n_status_code} — <b>Workflow successfully started!</b>`;
+              desc.innerHTML = `<b>Target Webhook:</b> <code>${data.webhook_url}</code><br/><b>Recipient:</b> <code>${data.recipient || travelerEmail}</code><br/><b>n8n Response:</b> HTTP ${data.n8n_status_code} — <b>Workflow successfully started!</b>`;
             } else {
               title.innerHTML = `⚠️ <span style="color: #EA580C;">Webhook Dispatch Warning</span>`;
               desc.innerHTML = data.error || "Unable to reach n8n webhook.";
+            }
+          }
+        }, 1200);
+      } catch (err) {
+        outputBox.textContent = "Error: " + err.message;
+      }
+    });
+  }
+
+  const mailBtn = document.getElementById("btn-n8n-mail");
+  if (mailBtn) {
+    mailBtn.addEventListener("click", async () => {
+      animateNodes();
+      const outputBox = document.getElementById("n8n-output-json");
+      const travelerEmail = document.getElementById("traveler-email")?.value || "dhanishladwani@gmail.com";
+      outputBox.textContent = `📧 Dispatching itinerary email directly to ${travelerEmail} via n8n Cloud...`;
+
+      try {
+        const destInput = document.getElementById("destination")?.value || "Jaipur";
+        const resp = await fetch("/api/n8n/trigger-cloud", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            destination: destInput,
+            trip_id: currentTripData ? currentTripData.trip_id : "trip_live",
+            email: travelerEmail
+          })
+        });
+        const data = await resp.json();
+
+        setTimeout(() => {
+          outputBox.textContent = JSON.stringify(data, null, 2);
+          const card = document.getElementById("n8n-result-card");
+          const title = document.getElementById("n8n-status-title");
+          const desc = document.getElementById("n8n-status-desc");
+
+          if (card && title && desc) {
+            card.style.display = "block";
+            if (data.status === "success") {
+              title.innerHTML = `✉️ <span style="color: #0284c7;">Email Dispatched Successfully!</span>`;
+              desc.innerHTML = `<b>Recipient:</b> <code>${data.recipient || travelerEmail}</code><br/><b>Status:</b> HTTP ${data.n8n_status_code} — Workflow executed and Gmail alert dispatched!`;
+            } else {
+              title.innerHTML = `⚠️ <span style="color: #EA580C;">Dispatch Warning</span>`;
+              desc.innerHTML = data.error || "Unable to reach n8n email service.";
             }
           }
         }, 1200);

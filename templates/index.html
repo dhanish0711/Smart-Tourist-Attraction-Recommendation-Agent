@@ -228,6 +228,17 @@
             </label>
           </div>
 
+          <!-- Traveler Email Field (n8n Live Gmail Alerts & Calendar Sync) -->
+          <div style="margin-bottom: 0.75rem;">
+            <label class="input-label" for="traveler-email">
+              ✉️ Traveler Email <span class="sub">(n8n Gmail Alerts & Dossier Delivery)</span>
+            </label>
+            <div class="input-text-wrap">
+              <span class="input-icon-left">📧</span>
+              <input type="email" id="traveler-email" name="traveler-email" class="form-input" value="dhanishladwani@gmail.com" placeholder="dhanishladwani@gmail.com" />
+            </div>
+          </div>
+
           <!-- Submit CTA Button -->
           <button type="submit" id="submit-btn" class="cta-button">
             <span>🚀 Launch Autonomous Travel Agent</span>
@@ -387,6 +398,9 @@
             <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.25rem;">
               <button type="button" id="btn-n8n-cloud" class="cta-button" style="width: auto; background: linear-gradient(135deg, #FF6D5A, #EA580C);">
                 <span>⚡ Trigger Live n8n Cloud Webhook</span>
+              </button>
+              <button type="button" id="btn-n8n-mail" class="cta-button" style="width: auto; background: linear-gradient(135deg, #0284c7, #2563eb);">
+                <span>📧 Dispatch Email to dhanishladwani@gmail.com</span>
               </button>
               <button type="button" id="btn-n8n-simulate" class="cta-button" style="width: auto; background: var(--slate-800);">
                 <span>🧪 Test Simulated Morning Cron</span>
