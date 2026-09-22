@@ -1,13 +1,18 @@
 # 🌍 Smart Tourist Attraction Recommendation Agent
 ### Skill-Augmented Agentic AI Travel Intelligence, Global POI Discovery, ChromaDB RAG & n8n Automation
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Render%20Cloud-00C7B7?style=for-the-badge&logo=render&logoColor=white)](https://smart-tourist-attraction-recommendation.onrender.com)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github)](https://github.com/dhanish0711/Smart-Tourist-Attraction-Recommendation-Agent)
+[![n8n Cloud](https://img.shields.io/badge/n8n-Workflow%20Automation-FF6D5A?style=for-the-badge&logo=n8n)](https://dhanish0711.app.n8n.cloud)
+
 [![Python 3.13](https://img.shields.io/badge/python-3.13-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688.svg)](https://fastapi.tiangolo.com/)
 [![ChromaDB](https://img.shields.io/badge/ChromaDB-1.5.9-purple.svg)](https://www.trychroma.com/)
 [![LangChain](https://img.shields.io/badge/LangChain-1.4.0-brightgreen.svg)](https://python.langchain.com/)
-[![n8n](https://img.shields.io/badge/n8n-Workflow-orange.svg)](https://n8n.io/)
-[![Deploy on Render](https://img.shields.io/badge/Deploy%20on-Render-46E3B7.svg)](https://render.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+> 🚀 **Live Production Application**: **[https://smart-tourist-attraction-recommendation.onrender.com](https://smart-tourist-attraction-recommendation.onrender.com/)**  
+> ⚡ **Connected n8n Cloud Webhook**: `https://dhanish0711.app.n8n.cloud/webhook/trip-monitor`
 
 An enterprise-grade, academic-ready **Agentic AI & Automation Travel Intelligence System** featuring a custom modern web dashboard (Zero Gradio), **Universal Global POI Discovery** for any destination worldwide, **Persistent ChromaDB Vector RAG**, **Langflow Visual Orchestration**, and **n8n Autonomous Monitoring & Gmail Alerts**.
 
@@ -185,13 +190,25 @@ flowchart TD
 
 ## 🚀 1-Click Free Cloud Deployment
 
-Deploy your live travel agent with a permanent public HTTPS URL for **FREE** (no credit card required):
+### 🌐 Active Production Deployment
+The application is deployed, live, and publicly accessible worldwide:
 
-### Option 1: Render.com *(Recommended)*
-1. Push your repository to GitHub:
+| Service | Public Access URL | Description |
+|---|---|---|
+| **Live Web Application** | **[https://smart-tourist-attraction-recommendation.onrender.com](https://smart-tourist-attraction-recommendation.onrender.com/)** | Interactive Single-Page Itinerary Engine, Map & Audio Guides |
+| **API Health Check** | `https://smart-tourist-attraction-recommendation.onrender.com/api/health` | Backend status & uptime monitor |
+| **n8n Replan Webhook** | `https://smart-tourist-attraction-recommendation.onrender.com/api/replan` | Autonomous weather disruption replanning endpoint |
+| **n8n Config & Status** | `https://smart-tourist-attraction-recommendation.onrender.com/api/n8n/config` | Real-time tunnel and webhook integration metadata |
+| **n8n Cloud Webhook** | `https://dhanish0711.app.n8n.cloud/webhook/trip-monitor` | Connected n8n morning monitoring & alert pipeline |
+
+---
+
+### Deploy Your Own Copy
+
+#### Option 1: Render.com *(Recommended)*
+1. Fork or push this repository to your GitHub:
    ```bash
-   git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO_NAME.git
-   git push -u origin main
+   git clone https://github.com/dhanish0711/Smart-Tourist-Attraction-Recommendation-Agent.git
    ```
 2. Open **[https://dashboard.render.com](https://dashboard.render.com)** and sign in with GitHub.
 3. Click **"New +"** $\rightarrow$ **"Web Service"** $\rightarrow$ Select your repository.
@@ -201,7 +218,6 @@ Deploy your live travel agent with a permanent public HTTPS URL for **FREE** (no
    - **Start Command**: `python -m uvicorn server:app --host 0.0.0.0 --port $PORT`
    - **Plan**: Free
 5. Click **"Deploy Web Service"**!
-> 🔗 Your app is live at: `https://your-app-name.onrender.com`
 
 ---
 
@@ -221,7 +237,7 @@ docker run -p 8000:8000 -e PORT=8000 smart-tourist-agent
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/YOUR_USERNAME/smart-tourist-agent.git
+git clone https://github.com/dhanish0711/Smart-Tourist-Attraction-Recommendation-Agent.git
 cd "Smart Tourist Attraction Recommendation Agent"
 ```
 
