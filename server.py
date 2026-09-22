@@ -5,6 +5,8 @@ serving custom HTML5, CSS3, JavaScript, ChromaDB RAG, and n8n webhooks.
 """
 from pathlib import Path
 from typing import Dict, Any, Optional
+import threading
+import httpx
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse, FileResponse
@@ -55,6 +57,28 @@ def plan_trip_endpoint(profile: TravelerProfile):
     """
     trip_plan = orchestrator.plan_trip(profile)
     SESSION_PLANS[trip_plan.trip_id] = trip_plan
+
+    # Asynchronously notify configured n8n Cloud Webhook
+    if settings.N8N_WEBHOOK_URL:
+        def _notify_n8n():
+            try:
+                httpx.post(
+                    settings.N8N_WEBHOOK_URL,
+                    json={
+                        "event": "trip_created",
+                        "trip_id": trip_plan.trip_id,
+                        "destination": trip_plan.profile.destination,
+                        "duration_days": trip_plan.profile.duration_days,
+                        "budget": trip_plan.profile.budget,
+                        "email": "traveler@example.com",
+                        "source": "Smart Tourist Attraction Recommendation Agent"
+                    },
+                    timeout=6.0
+                )
+            except Exception:
+                pass
+        threading.Thread(target=_notify_n8n, daemon=True).start()
+
     return trip_plan
 
 
@@ -179,18 +203,58 @@ def n8n_config_endpoint():
     return {
         "status": "connected",
         "public_base_url": base,
+        "n8n_webhook_url": settings.N8N_WEBHOOK_URL,
         "tunnel_active": base.startswith("https://"),
         "endpoints": {
             "replan":         f"{base}/api/replan",
             "weather_check":  f"{base}/api/n8n/webhook/weather-check",
             "trip_created":   f"{base}/api/n8n/webhook/trip-created",
             "simulate":       f"{base}/api/n8n/simulate",
+            "trigger_cloud":  f"{base}/api/n8n/trigger-cloud",
         },
         "download_url_template": {
             "ics": f"{base}/api/download/ics/{{trip_id}}",
             "pdf": f"{base}/api/download/pdf/{{trip_id}}",
         }
     }
+
+
+class TriggerCloudRequest(BaseModel):
+    destination: str = "Jaipur"
+    trip_id: Optional[str] = ""
+    email: Optional[str] = "traveler@example.com"
+
+
+@app.post("/api/n8n/trigger-cloud")
+def trigger_cloud_n8n_webhook(req: TriggerCloudRequest):
+    """
+    Triggers the user's active cloud n8n webhook directly (https://dhanish0711.app.n8n.cloud/webhook/trip-monitor).
+    """
+    webhook_url = settings.N8N_WEBHOOK_URL
+    if not webhook_url:
+        raise HTTPException(status_code=400, detail="No N8N_WEBHOOK_URL configured")
+    try:
+        payload = {
+            "event": "on_demand_trip_monitor",
+            "destination": req.destination,
+            "trip_id": req.trip_id or "trip_live",
+            "email": req.email or "traveler@example.com",
+            "source": "Smart Tourist Attraction Recommendation Agent"
+        }
+        resp = httpx.post(webhook_url, json=payload, timeout=12.0)
+        try:
+            resp_data = resp.json()
+        except Exception:
+            resp_data = resp.text
+
+        return {
+            "status": "success",
+            "n8n_status_code": resp.status_code,
+            "n8n_response": resp_data,
+            "webhook_url": webhook_url
+        }
+    except Exception as e:
+        return {"status": "error", "error": str(e), "webhook_url": webhook_url}
 
 
 @app.post("/api/n8n/webhook/trip-created")

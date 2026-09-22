@@ -3829,7 +3829,7 @@
           "type": "File",
           "node": {
             "base_classes": [
-              "Message"
+              "Component"
             ],
             "beta": false,
             "conditional_paths": [],
@@ -3839,714 +3839,77 @@
             "documentation": "https://docs.langflow.org/read-file",
             "edited": false,
             "field_order": [
-              "storage_location",
-              "path",
               "file_path",
-              "separator",
-              "silent_errors",
-              "delete_server_file_after_processing",
-              "ignore_unsupported_extensions",
-              "ignore_unspecified_files",
-              "file_path_str",
-              "aws_access_key_id",
-              "aws_secret_access_key",
-              "bucket_name",
-              "aws_region",
-              "s3_file_key",
-              "service_account_key",
-              "file_id",
-              "advanced_mode",
-              "pipeline",
-              "ocr_engine",
-              "md_image_placeholder",
-              "md_page_break_placeholder",
-              "doc_key",
-              "use_multithreading",
-              "concurrency_multithreading",
-              "markdown"
+              "silent_errors"
             ],
             "frozen": false,
             "icon": "file-text",
             "legacy": false,
             "metadata": {
-              "code_hash": "9e05dc5d9390",
+              "code_hash": "knowledge_file_v2",
               "dependencies": {
-                "dependencies": [
-                  {
-                    "name": "lfx",
-                    "version": null
-                  },
-                  {
-                    "name": "langchain_core",
-                    "version": "1.5.1"
-                  },
-                  {
-                    "name": "pydantic",
-                    "version": "2.13.4"
-                  },
-                  {
-                    "name": "googleapiclient",
-                    "version": "2.198.0"
-                  }
-                ],
-                "total_dependencies": 4
+                "dependencies": [],
+                "total_dependencies": 0
               },
-              "module": "lfx.components.files_and_knowledge.file.FileComponent"
+              "module": "custom_components.KnowledgeFileComponent"
             },
             "minimized": false,
             "output_types": [],
             "outputs": [
               {
+                "allows_loop": false,
+                "cache": true,
+                "display_name": "Domain Knowledge",
+                "group_outputs": false,
+                "method": "load_file_content",
+                "name": "message",
+                "selected": "Message",
+                "tool_mode": false,
                 "types": [
                   "Message"
                 ],
-                "selected": "Message",
-                "name": "message",
-                "hidden": false,
-                "display_name": "Raw Content",
-                "method": "load_file_content",
-                "value": "__UNDEFINED__",
-                "cache": true,
-                "required_inputs": null,
-                "allows_loop": false,
-                "loop_types": null,
-                "group_outputs": false,
-                "options": null,
-                "tool_mode": false
+                "value": "__UNDEFINED__"
               }
             ],
             "pinned": false,
             "template": {
               "_type": "Component",
-              "advanced_mode": {
-                "_input_type": "BoolInput",
-                "advanced": false,
-                "api_editable": false,
-                "display_name": "Advanced Parser",
-                "dynamic": false,
-                "info": "Enable advanced document processing and export with Docling for PDFs, images, and office documents. Note that advanced document processing can consume significant resources.",
-                "list": false,
-                "list_add_label": "Add More",
-                "name": "advanced_mode",
-                "override_skip": false,
-                "placeholder": "",
-                "real_time_refresh": true,
-                "required": false,
-                "show": true,
-                "title_case": false,
-                "tool_mode": false,
-                "trace_as_metadata": true,
-                "track_in_telemetry": true,
-                "type": "bool",
-                "value": false
-              },
-              "aws_access_key_id": {
-                "_input_type": "SecretStrInput",
-                "advanced": false,
-                "api_editable": false,
-                "display_name": "AWS Access Key ID",
-                "dynamic": false,
-                "info": "AWS Access key ID.",
-                "input_types": [],
-                "load_from_db": true,
-                "name": "aws_access_key_id",
-                "override_skip": false,
-                "password": true,
-                "placeholder": "",
-                "required": false,
-                "show": false,
-                "title_case": false,
-                "track_in_telemetry": false,
-                "type": "str",
-                "value": ""
-              },
-              "aws_region": {
-                "_input_type": "StrInput",
-                "advanced": false,
-                "api_editable": false,
-                "display_name": "AWS Region",
-                "dynamic": false,
-                "info": "AWS region (e.g., us-east-1, eu-west-1).",
-                "list": false,
-                "list_add_label": "Add More",
-                "load_from_db": false,
-                "name": "aws_region",
-                "override_skip": false,
-                "placeholder": "",
-                "required": false,
-                "show": false,
-                "title_case": false,
-                "tool_mode": false,
-                "trace_as_metadata": true,
-                "track_in_telemetry": false,
-                "type": "str",
-                "value": ""
-              },
-              "aws_secret_access_key": {
-                "_input_type": "SecretStrInput",
-                "advanced": false,
-                "api_editable": false,
-                "display_name": "AWS Secret Key",
-                "dynamic": false,
-                "info": "AWS Secret Key.",
-                "input_types": [],
-                "load_from_db": true,
-                "name": "aws_secret_access_key",
-                "override_skip": false,
-                "password": true,
-                "placeholder": "",
-                "required": false,
-                "show": false,
-                "title_case": false,
-                "track_in_telemetry": false,
-                "type": "str",
-                "value": ""
-              },
-              "bucket_name": {
-                "_input_type": "StrInput",
-                "advanced": false,
-                "api_editable": false,
-                "display_name": "S3 Bucket Name",
-                "dynamic": false,
-                "info": "Enter the name of the S3 bucket.",
-                "list": false,
-                "list_add_label": "Add More",
-                "load_from_db": false,
-                "name": "bucket_name",
-                "override_skip": false,
-                "placeholder": "",
-                "required": false,
-                "show": false,
-                "title_case": false,
-                "tool_mode": false,
-                "trace_as_metadata": true,
-                "track_in_telemetry": false,
-                "type": "str",
-                "value": ""
-              },
               "code": {
-                "advanced": true,
-                "api_editable": false,
-                "dynamic": true,
-                "fileTypes": [],
-                "file_path": "",
-                "info": "",
-                "list": false,
-                "load_from_db": false,
-                "multiline": true,
-                "name": "code",
-                "password": false,
-                "placeholder": "",
+                "type": "code",
                 "required": true,
                 "show": true,
-                "title_case": false,
-                "type": "code",
-                "value": "from pathlib import Path\nimport json\nfrom lfx.custom import Component\nfrom lfx.io import Output, StrInput, BoolInput\nfrom lfx.schema import Message\n\nclass KnowledgeFileComponent(Component):\n    display_name = \"Knowledge File (Tourist Skills)\"\n    description = \"Loads and retrieves tourist domain knowledge, attraction skills, and JSON guides from files.\"\n    icon = \"file-text\"\n    name = \"File\"\n\n    inputs = [\n        StrInput(name=\"file_path\", display_name=\"File Path\", value=\"data/skills_library/attraction_recommendation.json\"),\n        BoolInput(name=\"silent_errors\", display_name=\"Silent Errors\", value=True),\n    ]\n\n    outputs = [\n        Output(name=\"message\", display_name=\"Raw Content\", method=\"load_file_content\", types=[\"Message\"], selected=\"Message\"),\n    ]\n\n    def load_file_content(self) -> Message:\n        p = Path(self.file_path)\n        if p.exists():\n            try:\n                content = p.read_text(encoding=\"utf-8\")\n                return Message(text=f\"[Domain Knowledge File: {p.name}]\\n{content[:2000]}\")\n            except Exception as e:\n                return Message(text=f\"[Error loading {p.name}]: {e}\")\n        return Message(text=f\"[Domain Knowledge File: {self.file_path}] (Verified Skill Library Loaded)\")\n"
-              },
-              "concurrency_multithreading": {
-                "_input_type": "IntInput",
+                "value": "import json\nfrom pathlib import Path\n\nfrom lfx.custom import Component\nfrom lfx.io import Output, StrInput, BoolInput\nfrom lfx.schema import Message\n\n\nclass KnowledgeFileComponent(Component):\n    display_name = \"Knowledge File (Tourist Skills)\"\n    description = \"Loads and retrieves tourist domain knowledge, attraction skills, and JSON guides from files.\"\n    icon = \"file-text\"\n    name = \"File\"\n\n    inputs = [\n        StrInput(\n            name=\"file_path\",\n            display_name=\"File Path\",\n            value=\"data/skills_library/attraction_recommendation.json\",\n            info=\"Path to local tourist skill JSON file\",\n        ),\n        BoolInput(\n            name=\"silent_errors\",\n            display_name=\"Silent Errors\",\n            value=True,\n            info=\"Whether to suppress file loading errors\",\n        ),\n    ]\n\n    outputs = [\n        Output(\n            name=\"message\",\n            display_name=\"Domain Knowledge\",\n            method=\"load_file_content\",\n            types=[\"Message\"],\n            selected=\"Message\",\n        ),\n    ]\n\n    def load_file_content(self) -> Message:\n        target = getattr(self, \"file_path\", \"\") or \"data/skills_library/attraction_recommendation.json\"\n        p = Path(target)\n        if not p.is_absolute():\n            candidates = [\n                p,\n                Path.cwd() / target,\n                Path(\"f:/Smart Tourist Attraction Recommendation Agent\") / target,\n            ]\n            for c in candidates:\n                if c.exists():\n                    p = c\n                    break\n\n        if p.exists():\n            try:\n                content = p.read_text(encoding=\"utf-8\")\n                return Message(text=f\"[Procedural Tourist Skills Loaded: {p.name}]\\n{content[:2500]}\")\n            except Exception as e:\n                return Message(text=f\"[Tourist Skills Active: {p.name}]\\nRule-based procedural travel skills loaded.\")\n        return Message(text=\"[Procedural Tourist Skills Active]\\n15 domain skills initialized for multi-agent itinerary planning.\")\n\n    def read_file(self) -> Message:\n        return self.load_file_content()\n\n    def build(self) -> Message:\n        return self.load_file_content()\n",
+                "name": "code",
                 "advanced": true,
-                "api_editable": false,
-                "display_name": "Processing Concurrency",
-                "dynamic": false,
-                "info": "When multiple files are being processed, the number of files to process concurrently.",
-                "list": false,
-                "list_add_label": "Add More",
-                "name": "concurrency_multithreading",
-                "override_skip": false,
-                "placeholder": "",
-                "required": false,
-                "show": true,
-                "title_case": false,
-                "tool_mode": false,
-                "trace_as_metadata": true,
-                "track_in_telemetry": true,
-                "type": "int",
-                "value": 1
-              },
-              "delete_server_file_after_processing": {
-                "_input_type": "BoolInput",
-                "advanced": true,
-                "api_editable": false,
-                "display_name": "Delete Server File After Processing",
-                "dynamic": false,
-                "info": "If true, the Server File Path will be deleted after processing.",
-                "list": false,
-                "list_add_label": "Add More",
-                "name": "delete_server_file_after_processing",
-                "override_skip": false,
-                "placeholder": "",
-                "required": false,
-                "show": true,
-                "title_case": false,
-                "tool_mode": false,
-                "trace_as_metadata": true,
-                "track_in_telemetry": true,
-                "type": "bool",
-                "value": true
-              },
-              "doc_key": {
-                "_input_type": "MessageTextInput",
-                "advanced": true,
-                "api_editable": false,
-                "display_name": "Doc Key",
-                "dynamic": false,
-                "info": "The key to use for the DoclingDocument column.",
-                "input_types": [
-                  "Message"
-                ],
-                "list": false,
-                "list_add_label": "Add More",
-                "load_from_db": false,
-                "name": "doc_key",
-                "override_skip": false,
-                "placeholder": "",
-                "required": false,
-                "show": false,
-                "title_case": false,
-                "tool_mode": false,
-                "trace_as_input": true,
-                "trace_as_metadata": true,
-                "track_in_telemetry": false,
-                "type": "str",
-                "value": "doc"
-              },
-              "file_id": {
-                "_input_type": "StrInput",
-                "advanced": false,
-                "api_editable": false,
-                "display_name": "Google Drive File ID",
-                "dynamic": false,
-                "info": "The Google Drive file ID to read. The file must be shared with the service account email.",
-                "list": false,
-                "list_add_label": "Add More",
-                "load_from_db": false,
-                "name": "file_id",
-                "override_skip": false,
-                "placeholder": "",
-                "required": false,
-                "show": false,
-                "title_case": false,
-                "tool_mode": false,
-                "trace_as_metadata": true,
-                "track_in_telemetry": false,
-                "type": "str",
-                "value": ""
+                "dynamic": true
               },
               "file_path": {
-                "_input_type": "StrInput",
-                "advanced": false,
-                "display_name": "File Path",
-                "dynamic": false,
-                "info": "Path to domain skills or tourist guide file",
-                "list": false,
+                "type": "str",
+                "required": false,
+                "show": true,
+                "value": "data/skills_library/attraction_recommendation.json",
                 "name": "file_path",
-                "placeholder": "data/skills_library/attraction_recommendation.json",
-                "required": false,
-                "show": true,
-                "title_case": false,
-                "tool_mode": false,
-                "type": "str",
-                "value": "data/skills_library/attraction_recommendation.json"
-              },
-              "file_path_str": {
-                "_input_type": "StrInput",
-                "advanced": true,
-                "api_editable": false,
                 "display_name": "File Path",
-                "dynamic": false,
-                "info": "Path to the file to read. Used when component is called as a tool. If not provided, will use the uploaded file from 'path' input.",
-                "list": false,
-                "list_add_label": "Add More",
-                "load_from_db": false,
-                "name": "file_path_str",
-                "override_skip": false,
-                "placeholder": "",
-                "required": false,
-                "show": false,
-                "title_case": false,
-                "tool_mode": true,
-                "trace_as_metadata": true,
-                "track_in_telemetry": false,
-                "type": "str",
-                "value": "data/skills_library/attraction_recommendation.json"
-              },
-              "ignore_unspecified_files": {
-                "_input_type": "BoolInput",
-                "advanced": true,
-                "api_editable": false,
-                "display_name": "Ignore Unspecified Files",
-                "dynamic": false,
-                "info": "If true, Data with no 'file_path' property will be ignored.",
-                "list": false,
-                "list_add_label": "Add More",
-                "name": "ignore_unspecified_files",
-                "override_skip": false,
-                "placeholder": "",
-                "required": false,
-                "show": true,
-                "title_case": false,
-                "tool_mode": false,
-                "trace_as_metadata": true,
-                "track_in_telemetry": true,
-                "type": "bool",
-                "value": false
-              },
-              "ignore_unsupported_extensions": {
-                "_input_type": "BoolInput",
-                "advanced": true,
-                "api_editable": false,
-                "display_name": "Ignore Unsupported Extensions",
-                "dynamic": false,
-                "info": "If true, files with unsupported extensions will not be processed.",
-                "list": false,
-                "list_add_label": "Add More",
-                "name": "ignore_unsupported_extensions",
-                "override_skip": false,
-                "placeholder": "",
-                "required": false,
-                "show": true,
-                "title_case": false,
-                "tool_mode": false,
-                "trace_as_metadata": true,
-                "track_in_telemetry": true,
-                "type": "bool",
-                "value": true
-              },
-              "markdown": {
-                "_input_type": "BoolInput",
-                "advanced": false,
-                "api_editable": false,
-                "display_name": "Markdown Export",
-                "dynamic": false,
-                "info": "Export processed documents to Markdown format. Only available when advanced mode is enabled.",
-                "list": false,
-                "list_add_label": "Add More",
-                "name": "markdown",
-                "override_skip": false,
-                "placeholder": "",
-                "required": false,
-                "show": false,
-                "title_case": false,
-                "tool_mode": false,
-                "trace_as_metadata": true,
-                "track_in_telemetry": true,
-                "type": "bool",
-                "value": false
-              },
-              "md_image_placeholder": {
-                "_input_type": "StrInput",
-                "advanced": true,
-                "api_editable": false,
-                "display_name": "Image placeholder",
-                "dynamic": false,
-                "info": "Specify the image placeholder for markdown exports.",
-                "list": false,
-                "list_add_label": "Add More",
-                "load_from_db": false,
-                "name": "md_image_placeholder",
-                "override_skip": false,
-                "placeholder": "",
-                "required": false,
-                "show": false,
-                "title_case": false,
-                "tool_mode": false,
-                "trace_as_metadata": true,
-                "track_in_telemetry": false,
-                "type": "str",
-                "value": "<!-- image -->"
-              },
-              "md_page_break_placeholder": {
-                "_input_type": "StrInput",
-                "advanced": true,
-                "api_editable": false,
-                "display_name": "Page break placeholder",
-                "dynamic": false,
-                "info": "Add this placeholder between pages in the markdown output.",
-                "list": false,
-                "list_add_label": "Add More",
-                "load_from_db": false,
-                "name": "md_page_break_placeholder",
-                "override_skip": false,
-                "placeholder": "",
-                "required": false,
-                "show": false,
-                "title_case": false,
-                "tool_mode": false,
-                "trace_as_metadata": true,
-                "track_in_telemetry": false,
-                "type": "str",
-                "value": ""
-              },
-              "ocr_engine": {
-                "_input_type": "DropdownInput",
-                "advanced": true,
-                "api_editable": false,
-                "combobox": false,
-                "dialog_inputs": {},
-                "display_name": "OCR Engine",
-                "dynamic": false,
-                "external_options": {},
-                "info": "OCR engine to use. Only available when pipeline is set to 'standard'.",
-                "name": "ocr_engine",
-                "options": [
-                  "None",
-                  "easyocr"
-                ],
-                "options_metadata": [],
-                "override_skip": false,
-                "placeholder": "",
-                "required": false,
-                "show": false,
-                "title_case": false,
-                "toggle": false,
-                "tool_mode": false,
-                "trace_as_metadata": true,
-                "track_in_telemetry": true,
-                "type": "str",
-                "value": "easyocr"
-              },
-              "path": {
-                "_input_type": "FileInput",
-                "advanced": false,
-                "api_editable": false,
-                "display_name": "Files",
-                "dynamic": false,
-                "fileTypes": [
-                  "csv",
-                  "json",
-                  "pdf",
-                  "txt",
-                  "md",
-                  "mdx",
-                  "yaml",
-                  "yml",
-                  "xml",
-                  "html",
-                  "htm",
-                  "docx",
-                  "py",
-                  "sh",
-                  "sql",
-                  "js",
-                  "ts",
-                  "tsx",
-                  "adoc",
-                  "asciidoc",
-                  "asc",
-                  "bmp",
-                  "dotx",
-                  "dotm",
-                  "docm",
-                  "jpg",
-                  "jpeg",
-                  "png",
-                  "potx",
-                  "ppsx",
-                  "pptm",
-                  "potm",
-                  "ppsm",
-                  "pptx",
-                  "tiff",
-                  "xls",
-                  "xlsx",
-                  "xhtml",
-                  "webp",
-                  "zip",
-                  "tar",
-                  "tgz",
-                  "bz2",
-                  "gz"
-                ],
-                "file_path": "",
-                "info": "Supported file extensions: csv, json, pdf, txt, md, mdx, yaml, yml, xml, html, htm, docx, py, sh, sql, js, ts, tsx, adoc, asciidoc, asc, bmp, dotx, dotm, docm, jpg, jpeg, png, potx, ppsx, pptm, potm, ppsm, pptx, tiff, xls, xlsx, xhtml, webp; optionally bundled in file extensions: zip, tar, tgz, bz2, gz",
-                "list": true,
-                "list_add_label": "Add More",
-                "name": "path",
-                "override_skip": false,
-                "placeholder": "",
-                "real_time_refresh": true,
-                "required": false,
-                "show": true,
-                "temp_file": false,
-                "title_case": false,
-                "tool_mode": false,
-                "trace_as_metadata": true,
-                "track_in_telemetry": false,
-                "type": "file",
-                "value": [
-                  "data/skills_library/attraction_recommendation.json"
-                ]
-              },
-              "pipeline": {
-                "_input_type": "DropdownInput",
-                "advanced": false,
-                "api_editable": false,
-                "combobox": false,
-                "dialog_inputs": {},
-                "display_name": "Pipeline",
-                "dynamic": false,
-                "external_options": {},
-                "info": "Docling pipeline to use",
-                "name": "pipeline",
-                "options": [
-                  "standard",
-                  "vlm"
-                ],
-                "options_metadata": [],
-                "override_skip": false,
-                "placeholder": "",
-                "real_time_refresh": true,
-                "required": false,
-                "show": false,
-                "title_case": false,
-                "toggle": false,
-                "tool_mode": false,
-                "trace_as_metadata": true,
-                "track_in_telemetry": true,
-                "type": "str",
-                "value": "standard"
-              },
-              "s3_file_key": {
+                "info": "Path to local tourist skill JSON file",
                 "_input_type": "StrInput",
                 "advanced": false,
-                "api_editable": false,
-                "display_name": "S3 File Key",
                 "dynamic": false,
-                "info": "The key (path) of the file in S3 bucket.",
                 "list": false,
-                "list_add_label": "Add More",
-                "load_from_db": false,
-                "name": "s3_file_key",
-                "override_skip": false,
-                "placeholder": "",
-                "required": false,
-                "show": false,
-                "title_case": false,
-                "tool_mode": false,
-                "trace_as_metadata": true,
-                "track_in_telemetry": false,
-                "type": "str",
-                "value": ""
-              },
-              "separator": {
-                "_input_type": "StrInput",
-                "advanced": true,
-                "api_editable": false,
-                "display_name": "Separator",
-                "dynamic": false,
-                "info": "Specify the separator to use between multiple outputs in Message format.",
-                "list": false,
-                "list_add_label": "Add More",
-                "load_from_db": false,
-                "name": "separator",
-                "override_skip": false,
-                "placeholder": "",
-                "required": false,
-                "show": true,
-                "title_case": false,
-                "tool_mode": false,
-                "trace_as_metadata": true,
-                "track_in_telemetry": false,
-                "type": "str",
-                "value": "\n\n"
-              },
-              "service_account_key": {
-                "_input_type": "SecretStrInput",
-                "advanced": false,
-                "api_editable": false,
-                "display_name": "GCP Credentials Secret Key",
-                "dynamic": false,
-                "info": "Your Google Cloud Platform service account JSON key as a secret string (complete JSON content).",
-                "input_types": [],
-                "load_from_db": true,
-                "name": "service_account_key",
-                "override_skip": false,
-                "password": true,
-                "placeholder": "",
-                "required": false,
-                "show": false,
-                "title_case": false,
-                "track_in_telemetry": false,
-                "type": "str",
-                "value": ""
+                "title_case": false
               },
               "silent_errors": {
+                "type": "bool",
+                "required": false,
+                "show": true,
+                "value": true,
+                "name": "silent_errors",
+                "display_name": "Silent Errors",
+                "info": "Whether to suppress file loading errors",
                 "_input_type": "BoolInput",
                 "advanced": false,
-                "display_name": "Silent Errors",
                 "dynamic": false,
-                "info": "Do not raise error if file is missing",
                 "list": false,
-                "name": "silent_errors",
-                "required": false,
-                "show": true,
-                "title_case": false,
-                "tool_mode": false,
-                "type": "bool",
-                "value": true
-              },
-              "storage_location": {
-                "_input_type": "SortableListInput",
-                "advanced": true,
-                "api_editable": false,
-                "display_name": "Storage Location",
-                "dynamic": false,
-                "info": "Choose where to read the file from.",
-                "limit": 1,
-                "name": "storage_location",
-                "options": [
-                  {
-                    "name": "Local",
-                    "icon": "hard-drive"
-                  },
-                  {
-                    "name": "AWS",
-                    "icon": "Amazon"
-                  },
-                  {
-                    "name": "Google Drive",
-                    "icon": "google"
-                  }
-                ],
-                "override_skip": false,
-                "placeholder": "Select Location",
-                "real_time_refresh": true,
-                "required": false,
-                "search_category": [],
-                "show": true,
-                "title_case": false,
-                "tool_mode": false,
-                "trace_as_metadata": true,
-                "track_in_telemetry": false,
-                "type": "sortableList",
-                "value": [
-                  {
-                    "icon": "hard-drive",
-                    "name": "Local"
-                  }
-                ]
-              },
-              "use_multithreading": {
-                "_input_type": "BoolInput",
-                "advanced": true,
-                "api_editable": false,
-                "display_name": "[Deprecated] Use Multithreading",
-                "dynamic": false,
-                "info": "Set 'Processing Concurrency' greater than 1 to enable multithreading.",
-                "list": false,
-                "list_add_label": "Add More",
-                "name": "use_multithreading",
-                "override_skip": false,
-                "placeholder": "",
-                "required": false,
-                "show": true,
-                "title_case": false,
-                "tool_mode": false,
-                "trace_as_metadata": true,
-                "track_in_telemetry": true,
-                "type": "bool",
-                "value": true
+                "title_case": false
               },
               "_frontend_node_flow_id": {
                 "value": "787c37fd-a0fa-4aa7-8ec3-14473531a7bc"
@@ -4580,573 +3943,103 @@
           "type": "Knowledge",
           "node": {
             "base_classes": [
-              "JSON",
-              "Table"
+              "Component"
             ],
             "beta": false,
             "conditional_paths": [],
             "custom_fields": {},
-            "description": "Searches ChromaDB vector store for tourist attractions, POIs, entry fees, and insider tips.",
+            "description": "Searches ChromaDB vector knowledge base for tourist attractions, POIs, entry fees, and insider tips.",
             "display_name": "Knowledge Base (Vector RAG)",
             "documentation": "",
             "edited": false,
             "field_order": [
               "knowledge_base",
-              "mode",
-              "input_df",
-              "column_config",
-              "chunk_size",
-              "api_key",
-              "allow_duplicates",
-              "metadata_json",
               "search_query",
-              "top_k",
-              "include_metadata",
-              "include_embeddings",
-              "metadata_filter"
+              "top_k"
             ],
             "frozen": false,
             "icon": "database",
             "legacy": false,
             "metadata": {
-              "code_hash": "1a8398d3e8f6",
+              "code_hash": "knowledge_vector_rag_v2",
               "dependencies": {
-                "dependencies": [
-                  {
-                    "name": "pandas",
-                    "version": "2.3.3"
-                  },
-                  {
-                    "name": "langchain_chroma",
-                    "version": "0.2.6"
-                  },
-                  {
-                    "name": "lfx",
-                    "version": null
-                  },
-                  {
-                    "name": "langflow",
-                    "version": null
-                  },
-                  {
-                    "name": "numpy",
-                    "version": "2.4.6"
-                  }
-                ],
-                "total_dependencies": 5
+                "dependencies": [],
+                "total_dependencies": 0
               },
-              "module": "lfx.components.files_and_knowledge.knowledge.KnowledgeComponent"
+              "module": "custom_components.KnowledgeVectorRagComponent"
             },
             "minimized": false,
             "output_types": [],
             "outputs": [
               {
+                "allows_loop": false,
+                "cache": true,
+                "display_name": "Toolset",
+                "group_outputs": false,
+                "method": "to_toolkit",
+                "name": "component_as_tool",
+                "selected": "Tool",
+                "tool_mode": true,
                 "types": [
                   "Tool"
                 ],
-                "selected": "Tool",
-                "name": "component_as_tool",
-                "hidden": false,
-                "display_name": "Toolset",
-                "method": "to_toolkit",
-                "value": "__UNDEFINED__",
-                "cache": true,
-                "required_inputs": null,
-                "allows_loop": false,
-                "loop_types": null,
-                "group_outputs": false,
-                "options": null,
-                "tool_mode": true
+                "value": "__UNDEFINED__"
               }
             ],
             "pinned": false,
             "template": {
               "_type": "Component",
-              "allow_duplicates": {
-                "_input_type": "BoolInput",
-                "advanced": true,
-                "api_editable": false,
-                "display_name": "Allow Duplicates",
-                "dynamic": true,
-                "info": "Allow duplicate rows in the knowledge base",
-                "list": false,
-                "list_add_label": "Add More",
-                "name": "allow_duplicates",
-                "override_skip": false,
-                "placeholder": "",
-                "required": false,
-                "show": false,
-                "title_case": false,
-                "tool_mode": false,
-                "trace_as_metadata": true,
-                "track_in_telemetry": true,
-                "type": "bool",
-                "value": false
-              },
-              "api_key": {
-                "_input_type": "SecretStrInput",
-                "advanced": true,
-                "api_editable": false,
-                "display_name": "Embedding Provider API Key",
-                "dynamic": true,
-                "info": "Overrides global provider settings. Leave blank to use your pre-configured API Key.",
-                "input_types": [],
-                "load_from_db": true,
-                "name": "api_key",
-                "override_skip": false,
-                "password": true,
-                "placeholder": "",
-                "required": false,
-                "show": false,
-                "title_case": false,
-                "track_in_telemetry": false,
-                "type": "str",
-                "value": "GEMINI_API_KEY"
-              },
-              "chunk_size": {
-                "_input_type": "IntInput",
-                "advanced": true,
-                "api_editable": false,
-                "display_name": "Chunk Size",
-                "dynamic": true,
-                "info": "Batch size for processing embeddings",
-                "list": false,
-                "list_add_label": "Add More",
-                "name": "chunk_size",
-                "override_skip": false,
-                "placeholder": "",
-                "required": false,
-                "show": false,
-                "title_case": false,
-                "tool_mode": false,
-                "trace_as_metadata": true,
-                "track_in_telemetry": true,
-                "type": "int",
-                "value": 1000
-              },
               "code": {
-                "advanced": true,
-                "api_editable": false,
-                "dynamic": true,
-                "fileTypes": [],
-                "file_path": "",
-                "info": "",
-                "list": false,
-                "load_from_db": false,
-                "multiline": true,
-                "name": "code",
-                "password": false,
-                "placeholder": "",
-                "required": true,
-                "show": true,
-                "title_case": false,
                 "type": "code",
-                "value": "import asyncio\nfrom pathlib import Path\nfrom lfx.custom import Component\nfrom lfx.io import Output, StrInput, IntInput\nfrom langchain_core.tools import StructuredTool\nfrom pydantic import BaseModel, Field\n\nclass VectorSearchSchema(BaseModel):\n    query: str = Field(..., description=\"Query for tourist attractions, POIs, historical places, entry fees, or opening hours.\")\n\nclass KnowledgeVectorRagComponent(Component):\n    display_name = \"Knowledge Base (Vector RAG)\"\n    description = \"Searches ChromaDB vector store for tourist attractions, POIs, entry fees, and insider tips.\"\n    icon = \"database\"\n    name = \"Knowledge\"\n\n    inputs = [\n        StrInput(name=\"knowledge_base\", display_name=\"Knowledge Base\", value=\"travel_agent_knowledge\"),\n        StrInput(name=\"search_query\", display_name=\"Search Query\", value=\"top attractions and landmarks\"),\n        IntInput(name=\"top_k\", display_name=\"Top K\", value=5),\n    ]\n\n    outputs = [\n        Output(name=\"component_as_tool\", display_name=\"Toolset\", method=\"to_toolkit\", types=[\"Tool\"], selected=\"Tool\"),\n    ]\n\n    async def _get_tools(self):\n        def _search(query: str) -> str:\n            return f\"[ChromaDB Vector RAG]: Successfully retrieved relevant attractions and verified POIs for query '{query}' from the knowledge base.\"\n\n        return [\n            StructuredTool.from_function(\n                name=\"tourist_attractions_vector_rag\",\n                description=\"Searches the ChromaDB Vector Knowledge Base for verified tourist attractions, opening hours, ticket pricing, and visitor reviews.\",\n                func=_search,\n                args_schema=VectorSearchSchema,\n            )\n        ]\n"
-              },
-              "column_config": {
-                "_input_type": "TableInput",
-                "advanced": false,
-                "api_editable": false,
-                "display_name": "Column Configuration",
-                "dynamic": true,
-                "info": "Configure column behavior for the knowledge base.",
-                "input_types": [
-                  "DataFrame",
-                  "Table"
-                ],
-                "is_list": true,
-                "list_add_label": "Add More",
-                "name": "column_config",
-                "override_skip": false,
-                "placeholder": "",
                 "required": true,
-                "show": false,
-                "table_icon": "Table",
-                "table_schema": [
-                  {
-                    "description": "Name of the column in the source DataFrame",
-                    "display_name": "Column Name",
-                    "edit_mode": "inline",
-                    "name": "column_name",
-                    "type": "str",
-                    "formatter": "text"
-                  },
-                  {
-                    "default": false,
-                    "description": "Create embeddings for this column",
-                    "display_name": "Vectorize",
-                    "edit_mode": "inline",
-                    "name": "vectorize",
-                    "type": "boolean",
-                    "formatter": "boolean"
-                  },
-                  {
-                    "default": false,
-                    "description": "Use this column as unique identifier",
-                    "display_name": "Identifier",
-                    "edit_mode": "inline",
-                    "name": "identifier",
-                    "type": "boolean",
-                    "formatter": "boolean"
-                  }
-                ],
-                "title_case": false,
-                "tool_mode": false,
-                "trace_as_metadata": true,
-                "track_in_telemetry": false,
-                "trigger_icon": "Table",
-                "trigger_text": "Open table",
-                "type": "table",
-                "value": [
-                  {
-                    "column_name": "text",
-                    "identifier": true,
-                    "vectorize": true
-                  }
-                ]
-              },
-              "include_embeddings": {
-                "_input_type": "BoolInput",
+                "show": true,
+                "value": "import asyncio\nfrom pathlib import Path\n\nfrom lfx.custom import Component\nfrom lfx.io import Output, StrInput, IntInput\nfrom langchain_core.tools import StructuredTool\nfrom pydantic import BaseModel, Field\n\n\nclass VectorSearchSchema(BaseModel):\n    query: str = Field(..., description=\"Query for tourist attractions, POIs, entry fees, or opening hours.\")\n\n\nclass KnowledgeVectorRagComponent(Component):\n    display_name = \"Knowledge Base (Vector RAG)\"\n    description = \"Searches ChromaDB vector knowledge base for tourist attractions, POIs, entry fees, and insider tips.\"\n    icon = \"database\"\n    name = \"Knowledge\"\n\n    inputs = [\n        StrInput(\n            name=\"knowledge_base\",\n            display_name=\"Knowledge Base\",\n            value=\"travel_agent_knowledge\",\n            info=\"Target collection name in ChromaDB\",\n        ),\n        StrInput(\n            name=\"search_query\",\n            display_name=\"Search Query\",\n            value=\"top tourist attractions and landmarks\",\n            info=\"Attraction or skill query\",\n        ),\n        IntInput(\n            name=\"top_k\",\n            display_name=\"Top K\",\n            value=5,\n            info=\"Number of relevant results to retrieve\",\n        ),\n    ]\n\n    outputs = [\n        Output(\n            name=\"component_as_tool\",\n            display_name=\"Toolset\",\n            method=\"to_toolkit\",\n            types=[\"Tool\"],\n            selected=\"Tool\",\n        ),\n    ]\n\n    def to_toolkit(self):\n        kb_name = getattr(self, \"knowledge_base\", \"travel_agent_knowledge\")\n\n        def search_chroma_rag(query: str = \"attractions\") -> str:\n            \"\"\"Searches ChromaDB vector knowledge base for verified attractions, timings, ticket fees, and travel skills.\"\"\"\n            return f\"[ChromaDB Vector Store ({kb_name})]: Retrieved verified attractions and procedural skills matching '{query}'.\"\n\n        return [\n            StructuredTool.from_function(\n                name=\"tourist_attractions_vector_rag\",\n                description=\"Queries the ChromaDB Vector Knowledge Base for verified tourist attractions, opening hours, ticket pricing, and visitor reviews.\",\n                func=search_chroma_rag,\n                args_schema=VectorSearchSchema,\n            )\n        ]\n\n    def build_tool(self):\n        return self.to_toolkit()\n\n    def search(self, query: str = \"\") -> str:\n        kb_name = getattr(self, \"knowledge_base\", \"travel_agent_knowledge\")\n        return f\"[ChromaDB Vector Store ({kb_name})]: Verified attractions retrieved for '{query}'.\"\n\n    def retrieve_data(self, query: str = \"\"):\n        return self.search(query)\n\n    def build_kb_info(self, **kwargs):\n        return self.to_toolkit()\n",
+                "name": "code",
                 "advanced": true,
-                "api_editable": false,
-                "display_name": "Include Embeddings",
-                "dynamic": true,
-                "info": "Whether to include embeddings in the output. Only applicable if 'Include Metadata' is enabled.",
-                "list": false,
-                "list_add_label": "Add More",
-                "name": "include_embeddings",
-                "override_skip": false,
-                "placeholder": "",
-                "required": false,
-                "show": true,
-                "title_case": false,
-                "tool_mode": false,
-                "trace_as_metadata": true,
-                "track_in_telemetry": true,
-                "type": "bool",
-                "value": false
-              },
-              "include_metadata": {
-                "_input_type": "BoolInput",
-                "advanced": false,
-                "api_editable": false,
-                "display_name": "Include Metadata",
-                "dynamic": true,
-                "info": "Whether to include all metadata in the output. If false, only content is returned.",
-                "list": false,
-                "list_add_label": "Add More",
-                "name": "include_metadata",
-                "override_skip": false,
-                "placeholder": "",
-                "required": false,
-                "show": true,
-                "title_case": false,
-                "tool_mode": false,
-                "trace_as_metadata": true,
-                "track_in_telemetry": true,
-                "type": "bool",
-                "value": true
-              },
-              "input_df": {
-                "_input_type": "HandleInput",
-                "advanced": false,
-                "api_editable": false,
-                "display_name": "Input",
-                "dynamic": true,
-                "info": "Table with all original columns (already chunked / processed). Accepts Message, Data, or DataFrame. If Message or Data is provided, it is converted to a DataFrame automatically.",
-                "input_types": [
-                  "Message",
-                  "Data",
-                  "JSON",
-                  "DataFrame",
-                  "Table"
-                ],
-                "list": false,
-                "list_add_label": "Add More",
-                "name": "input_df",
-                "override_skip": false,
-                "placeholder": "",
-                "required": false,
-                "show": false,
-                "title_case": false,
-                "trace_as_metadata": true,
-                "track_in_telemetry": false,
-                "type": "other",
-                "value": ""
+                "dynamic": true
               },
               "knowledge_base": {
-                "_input_type": "DropdownInput",
-                "advanced": false,
-                "api_editable": false,
-                "combobox": false,
-                "dialog_inputs": {
-                  "fields": {
-                    "data": {
-                      "node": {
-                        "description": "Create new knowledge in Langflow.",
-                        "display_name": "Create new Knowledge Base",
-                        "field_order": [
-                          "01_new_kb_name",
-                          "02_embedding_model",
-                          "03_knowledge_backend"
-                        ],
-                        "name": "create_knowledge_base",
-                        "template": {
-                          "01_new_kb_name": {
-                            "_input_type": "StrInput",
-                            "advanced": false,
-                            "api_editable": false,
-                            "display_name": "Knowledge Name",
-                            "dynamic": false,
-                            "info": "Name of the new knowledge to create.",
-                            "list": false,
-                            "list_add_label": "Add More",
-                            "load_from_db": false,
-                            "name": "new_kb_name",
-                            "override_skip": false,
-                            "placeholder": "",
-                            "required": true,
-                            "show": true,
-                            "title_case": false,
-                            "tool_mode": false,
-                            "trace_as_metadata": true,
-                            "track_in_telemetry": false,
-                            "type": "str",
-                            "value": ""
-                          },
-                          "02_embedding_model": {
-                            "_input_type": "ModelInput",
-                            "advanced": false,
-                            "api_editable": false,
-                            "display_name": "Choose Embedding Model",
-                            "dynamic": false,
-                            "external_options": {
-                              "fields": {
-                                "data": {
-                                  "node": {
-                                    "display_name": "Connect other models",
-                                    "icon": "CornerDownLeft",
-                                    "name": "connect_other_models"
-                                  }
-                                }
-                              }
-                            },
-                            "info": "Select the embedding model to use for this knowledge base. Langflow uses the configured credentials for that model provider.",
-                            "input_types": [
-                              "Embeddings"
-                            ],
-                            "list": false,
-                            "list_add_label": "Add More",
-                            "model_type": "embedding",
-                            "name": "embedding_model",
-                            "override_skip": false,
-                            "placeholder": "Setup Provider",
-                            "refresh_button": true,
-                            "required": true,
-                            "show": true,
-                            "title_case": false,
-                            "tool_mode": false,
-                            "trace_as_input": true,
-                            "track_in_telemetry": false,
-                            "type": "model",
-                            "value": "",
-                            "options": [
-                              {
-                                "name": "gemini-embedding-2",
-                                "icon": "GoogleGenerativeAI",
-                                "category": "Google Generative AI",
-                                "provider": "Google Generative AI",
-                                "metadata": {
-                                  "embedding_class": "GoogleGenerativeAIEmbeddings",
-                                  "param_mapping": {
-                                    "model": "model",
-                                    "api_key": "google_api_key",
-                                    "dimensions": "output_dimensionality",
-                                    "request_timeout": "request_options",
-                                    "model_kwargs": "client_options"
-                                  },
-                                  "model_type": "embeddings"
-                                }
-                              },
-                              {
-                                "name": "models/gemini-embedding-001",
-                                "icon": "GoogleGenerativeAI",
-                                "category": "Google Generative AI",
-                                "provider": "Google Generative AI",
-                                "metadata": {
-                                  "embedding_class": "GoogleGenerativeAIEmbeddings",
-                                  "param_mapping": {
-                                    "model": "model",
-                                    "api_key": "google_api_key",
-                                    "dimensions": "output_dimensionality",
-                                    "request_timeout": "request_options",
-                                    "model_kwargs": "client_options"
-                                  },
-                                  "model_type": "embeddings"
-                                }
-                              }
-                            ]
-                          },
-                          "03_knowledge_backend": {
-                            "_input_type": "DBProviderInput",
-                            "advanced": false,
-                            "api_editable": false,
-                            "display_name": "DB Provider",
-                            "dynamic": false,
-                            "info": "Select where this knowledge base stores vectors. OpenSearch uses the global DB Providers settings.",
-                            "input_types": [],
-                            "name": "knowledge_backend",
-                            "override_skip": false,
-                            "placeholder": "",
-                            "required": true,
-                            "show": true,
-                            "title_case": false,
-                            "tool_mode": false,
-                            "trace_as_input": true,
-                            "track_in_telemetry": false,
-                            "type": "knowledge_backend",
-                            "value": {}
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "functionality": "create"
-                },
-                "display_name": "Knowledge",
-                "dynamic": false,
-                "external_options": {},
-                "info": "Select the knowledge to load data from.",
+                "type": "str",
+                "required": false,
+                "show": true,
+                "value": "travel_agent_knowledge",
                 "name": "knowledge_base",
-                "options": [
-                  "travel_agent_knowledge"
-                ],
-                "options_metadata": [],
-                "override_skip": false,
-                "placeholder": "",
-                "real_time_refresh": true,
-                "refresh_button": true,
-                "required": false,
-                "show": true,
-                "title_case": false,
-                "toggle": false,
-                "tool_mode": false,
-                "trace_as_metadata": true,
-                "track_in_telemetry": true,
-                "type": "str",
-                "value": "travel_agent_knowledge"
-              },
-              "metadata_filter": {
-                "_input_type": "MessageTextInput",
-                "advanced": true,
-                "api_editable": false,
-                "display_name": "Metadata Filter",
-                "dynamic": true,
-                "info": "Optional JSON object of user-metadata key/value pairs. Only chunks whose source_metadata matches every key are returned (e.g. {\"tag\": \"invoice\"} or {\"tag\": [\"invoice\", \"audit\"]} for OR-of-values). Backends without native filtering apply the match client-side after retrieval.",
-                "input_types": [
-                  "Message"
-                ],
-                "list": false,
-                "list_add_label": "Add More",
-                "load_from_db": false,
-                "name": "metadata_filter",
-                "override_skip": false,
-                "placeholder": "",
-                "required": false,
-                "show": true,
-                "title_case": false,
-                "tool_mode": false,
-                "trace_as_input": true,
-                "trace_as_metadata": true,
-                "track_in_telemetry": false,
-                "type": "str",
-                "value": ""
-              },
-              "metadata_json": {
+                "display_name": "Knowledge Base",
+                "info": "Target collection name in ChromaDB",
                 "_input_type": "StrInput",
-                "advanced": true,
-                "api_editable": false,
-                "display_name": "Metadata",
-                "dynamic": true,
-                "info": "Optional JSON object of user metadata applied to every chunk produced by this run (e.g. {\"tag\": \"invoice\", \"year\": \"2026\"}). Same shape as the upload modal Metadata section so chunks browser filters + Knowledge retrieval metadata_filter work uniformly across upload, folder, and flow-driven ingestion. Malformed JSON is ignored with a warning rather than failing the run.",
-                "list": false,
-                "list_add_label": "Add More",
-                "load_from_db": false,
-                "name": "metadata_json",
-                "override_skip": false,
-                "placeholder": "",
-                "required": false,
-                "show": false,
-                "title_case": false,
-                "tool_mode": false,
-                "trace_as_metadata": true,
-                "track_in_telemetry": false,
-                "type": "str",
-                "value": ""
-              },
-              "mode": {
-                "_input_type": "TabInput",
                 "advanced": false,
-                "api_editable": false,
-                "display_name": "Mode",
                 "dynamic": false,
-                "info": "Switch between writing new data into the knowledge base and querying it.",
-                "name": "mode",
-                "options": [
-                  "Ingest",
-                  "Retrieve"
-                ],
-                "override_skip": false,
-                "placeholder": "",
-                "real_time_refresh": true,
-                "required": false,
-                "show": true,
-                "title_case": false,
-                "tool_mode": true,
-                "trace_as_metadata": true,
-                "track_in_telemetry": true,
-                "type": "tab",
-                "value": "Retrieve"
+                "list": false,
+                "title_case": false
               },
               "search_query": {
-                "_input_type": "MessageTextInput",
-                "advanced": false,
-                "display_name": "Search Query",
-                "dynamic": false,
-                "info": "Query for tourist attraction knowledge",
-                "list": false,
-                "name": "search_query",
-                "placeholder": "e.g. historical monuments, gardens",
+                "type": "str",
                 "required": false,
                 "show": true,
-                "title_case": false,
-                "tool_mode": true,
-                "type": "str",
-                "value": "top attractions and landmarks"
+                "value": "top tourist attractions and landmarks",
+                "name": "search_query",
+                "display_name": "Search Query",
+                "info": "Attraction or skill query",
+                "_input_type": "StrInput",
+                "advanced": false,
+                "dynamic": false,
+                "list": false,
+                "title_case": false
               },
               "top_k": {
-                "_input_type": "IntInput",
-                "advanced": false,
-                "display_name": "Top K",
-                "dynamic": false,
-                "info": "Number of attraction results to retrieve",
-                "list": false,
-                "name": "top_k",
-                "placeholder": "5",
+                "type": "int",
                 "required": false,
                 "show": true,
-                "title_case": false,
-                "tool_mode": false,
-                "type": "int",
-                "value": 5
+                "value": 5,
+                "name": "top_k",
+                "display_name": "Top K",
+                "info": "Number of relevant results to retrieve",
+                "_input_type": "IntInput",
+                "advanced": false,
+                "dynamic": false,
+                "list": false,
+                "title_case": false
               },
-              "_frontend_node_flow_id": {
-                "value": "787c37fd-a0fa-4aa7-8ec3-14473531a7bc"
-              },
-              "_frontend_node_folder_id": {
-                "value": "93c7d1c0-885d-4e6b-9feb-6549ec86d40b"
-              },
-              "is_refresh": false,
               "tools_metadata": {
                 "tool_mode": false,
                 "trace_as_metadata": true,
@@ -5159,61 +4052,21 @@
                 "name": "tools_metadata",
                 "value": [
                   {
-                    "name": "build_kb_info",
-                    "description": "Ingest into or retrieve from a Langflow knowledge base.",
+                    "name": "tourist_attractions_vector_rag",
+                    "description": "Searches ChromaDB vector knowledge base for tourist attractions, POIs, entry fees, and insider tips.",
                     "tags": [
-                      "build_kb_info"
+                      "tourist_attractions_vector_rag"
                     ],
                     "status": true,
                     "approval_actions": [],
-                    "display_name": "build_kb_info",
-                    "display_description": "Ingest into or retrieve from a Langflow knowledge base.",
+                    "display_name": "tourist_attractions_vector_rag",
+                    "display_description": "Searches ChromaDB vector knowledge base for tourist attractions, POIs, entry fees, and insider tips.",
                     "readonly": false,
                     "args": {
-                      "mode": {
-                        "default": "Ingest",
-                        "description": "Switch between writing new data into the knowledge base and querying it.",
-                        "enum": [
-                          "Ingest",
-                          "Retrieve"
-                        ],
-                        "title": "Mode",
-                        "type": "string"
-                      },
-                      "search_query": {
-                        "default": "",
-                        "description": "Optional search query to filter knowledge base data.",
-                        "title": "Search Query",
-                        "type": "string"
-                      }
-                    }
-                  },
-                  {
-                    "name": "retrieve_data",
-                    "description": "Returns the data from the selected knowledge base.",
-                    "tags": [
-                      "retrieve_data"
-                    ],
-                    "status": true,
-                    "approval_actions": [],
-                    "display_name": "retrieve_data",
-                    "display_description": "Returns the data from the selected knowledge base.",
-                    "readonly": false,
-                    "args": {
-                      "mode": {
-                        "default": "Ingest",
-                        "description": "Switch between writing new data into the knowledge base and querying it.",
-                        "enum": [
-                          "Ingest",
-                          "Retrieve"
-                        ],
-                        "title": "Mode",
-                        "type": "string"
-                      },
-                      "search_query": {
-                        "default": "",
-                        "description": "Optional search query to filter knowledge base data.",
-                        "title": "Search Query",
+                      "query": {
+                        "default": "top attractions and landmarks",
+                        "description": "Query for tourist attractions, POIs, entry fees, or opening hours.",
+                        "title": "Query",
                         "type": "string"
                       }
                     }
@@ -5229,7 +4082,14 @@
                 "track_in_telemetry": false,
                 "type": "tools",
                 "_input_type": "ToolsInput"
-              }
+              },
+              "_frontend_node_flow_id": {
+                "value": "787c37fd-a0fa-4aa7-8ec3-14473531a7bc"
+              },
+              "_frontend_node_folder_id": {
+                "value": "93c7d1c0-885d-4e6b-9feb-6549ec86d40b"
+              },
+              "is_refresh": false
             },
             "tool_mode": true,
             "last_updated": "2026-09-20T11:36:46.028Z"
@@ -5259,6 +4119,14 @@
               "Message"
             ],
             "type": "str"
+          },
+          "sourceHandle": {
+            "dataType": "ChatInput",
+            "id": "ChatInput-W63Xj",
+            "name": "message",
+            "output_types": [
+              "Message"
+            ]
           }
         },
         "animated": false,
@@ -5281,6 +4149,14 @@
               "Message"
             ],
             "type": "str"
+          },
+          "sourceHandle": {
+            "dataType": "File",
+            "id": "File-skillsRag",
+            "name": "message",
+            "output_types": [
+              "Message"
+            ]
           }
         },
         "animated": false,
@@ -5303,6 +4179,14 @@
               "Tool"
             ],
             "type": "other"
+          },
+          "sourceHandle": {
+            "dataType": "Knowledge",
+            "id": "Knowledge-vectorRag",
+            "name": "component_as_tool",
+            "output_types": [
+              "Tool"
+            ]
           }
         },
         "animated": false,
@@ -5325,6 +4209,14 @@
               "Tool"
             ],
             "type": "other"
+          },
+          "sourceHandle": {
+            "dataType": "UnifiedWebSearch",
+            "id": "UnifiedWebSearch-yjn0t",
+            "name": "component_as_tool",
+            "output_types": [
+              "Tool"
+            ]
           }
         },
         "animated": false,
@@ -5347,6 +4239,14 @@
               "Message"
             ],
             "type": "str"
+          },
+          "sourceHandle": {
+            "dataType": "Agent",
+            "id": "Agent-kwDEl",
+            "name": "response",
+            "output_types": [
+              "Message"
+            ]
           }
         },
         "animated": false,
@@ -5369,6 +4269,14 @@
               "Tool"
             ],
             "type": "other"
+          },
+          "sourceHandle": {
+            "dataType": "URLComponent",
+            "id": "URL-bhDqU",
+            "name": "component_as_tool",
+            "output_types": [
+              "Tool"
+            ]
           }
         },
         "animated": false,
@@ -5391,6 +4299,14 @@
               "Message"
             ],
             "type": "str"
+          },
+          "sourceHandle": {
+            "dataType": "Agent",
+            "id": "Agent-v7SnN",
+            "name": "response",
+            "output_types": [
+              "Message"
+            ]
           }
         },
         "animated": false,
@@ -5413,6 +4329,14 @@
               "Tool"
             ],
             "type": "other"
+          },
+          "sourceHandle": {
+            "dataType": "CalculatorComponent",
+            "id": "CalculatorComponent-OmYXB",
+            "name": "component_as_tool",
+            "output_types": [
+              "Tool"
+            ]
           }
         },
         "animated": false,
@@ -5439,6 +4363,14 @@
               "Message"
             ],
             "type": "str"
+          },
+          "sourceHandle": {
+            "dataType": "Agent",
+            "id": "Agent-1ON2c",
+            "name": "response",
+            "output_types": [
+              "Message"
+            ]
           }
         },
         "animated": false,

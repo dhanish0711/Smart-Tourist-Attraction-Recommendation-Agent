@@ -41,13 +41,20 @@ class Settings(BaseSettings):
     # Set this in .env: N8N_TUNNEL_URL=https://your-tunnel.loca.lt
     N8N_TUNNEL_URL: str = os.getenv("N8N_TUNNEL_URL", "")
 
+    # n8n Cloud Webhook URL (for triggering cloud workflows)
+    N8N_WEBHOOK_URL: str = os.getenv("N8N_WEBHOOK_URL", "https://dhanish0711.app.n8n.cloud/webhook/trip-monitor")
+
     # Public base URL used in email links and webhook responses
-    # Checks N8N_TUNNEL_URL, then cloud platform URL (Render), then localhost fallback
+    # Checks RENDER_EXTERNAL_URL, RENDER_EXTERNAL_HOSTNAME, then N8N_TUNNEL_URL, then localhost fallback
     @property
     def PUBLIC_BASE_URL(self) -> str:
-        render_url = os.getenv("RENDER_EXTERNAL_URL", "")
+        render_url = os.getenv("RENDER_EXTERNAL_URL", "") or os.getenv("RENDER_EXTERNAL_HOSTNAME", "")
         if render_url:
+            if not render_url.startswith("http"):
+                render_url = f"https://{render_url}"
             return render_url.rstrip("/")
+        if os.getenv("RENDER"):
+            return "https://smart-tourist-attraction-recommendation.onrender.com"
         if self.N8N_TUNNEL_URL:
             return self.N8N_TUNNEL_URL.rstrip("/")
         return f"http://127.0.0.1:{self.PORT}"

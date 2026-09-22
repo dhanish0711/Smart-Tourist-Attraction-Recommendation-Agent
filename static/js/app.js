@@ -640,53 +640,94 @@ function setRagQuery(text) {
   }
 }
 
-// --- n8n Webhook Simulator ---
+// --- n8n Webhook & Automation Handlers ---
 function setupN8NSimulator() {
   const simBtn = document.getElementById("btn-n8n-simulate");
-  if (!simBtn) return;
+  const cloudBtn = document.getElementById("btn-n8n-cloud");
 
-  simBtn.addEventListener("click", async () => {
+  function animateNodes() {
     const nodes = ["n8n-node-cron", "n8n-node-weather", "n8n-node-if", "n8n-node-webhook", "n8n-node-alert"];
-
-    // Light up nodes sequentially for rich UI animation
     for (let i = 0; i < nodes.length; i++) {
       setTimeout(() => {
         document.querySelectorAll(".n8n-node").forEach(n => n.classList.remove("active"));
         const current = document.getElementById(nodes[i]);
         if (current) current.classList.add("active");
-      }, i * 300);
+      }, i * 250);
     }
+  }
 
-    const outputBox = document.getElementById("n8n-output-json");
-    outputBox.textContent = "⏳ Triggering simulated n8n morning cron webhook (POST /api/n8n/simulate)...";
+  if (cloudBtn) {
+    cloudBtn.addEventListener("click", async () => {
+      animateNodes();
+      const outputBox = document.getElementById("n8n-output-json");
+      outputBox.textContent = "⚡ Dispatching live event to n8n Cloud (https://dhanish0711.app.n8n.cloud/webhook/trip-monitor)...";
 
-    try {
-      const resp = await fetch("/api/n8n/simulate", { method: "POST" });
-      const data = await resp.json();
+      try {
+        const destInput = document.getElementById("destination")?.value || "Jaipur";
+        const resp = await fetch("/api/n8n/trigger-cloud", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ destination: destInput, trip_id: "trip_live" })
+        });
+        const data = await resp.json();
 
-      setTimeout(() => {
-        outputBox.textContent = JSON.stringify(data, null, 2);
+        setTimeout(() => {
+          outputBox.textContent = JSON.stringify(data, null, 2);
+          const card = document.getElementById("n8n-result-card");
+          const title = document.getElementById("n8n-status-title");
+          const desc = document.getElementById("n8n-status-desc");
 
-        const card = document.getElementById("n8n-result-card");
-        const title = document.getElementById("n8n-status-title");
-        const desc = document.getElementById("n8n-status-desc");
-
-        if (card && title && desc) {
-          card.style.display = "block";
-          if (data.status === "replan_triggered") {
-            title.innerHTML = `⚠️ <span style="color: #EA580C;">Replan Triggered by n8n</span>`;
-            desc.innerHTML = `<b>Trigger Condition:</b> ${data.condition}<br/><b>Agent Action:</b> ${data.action_taken}<br/><b>Notification:</b> ${data.notification_message}`;
-          } else {
-            title.innerHTML = `✅ <span style="color: var(--emerald);">Weather Normal</span>`;
-            desc.innerHTML = data.message || "All conditions verified normal.";
+          if (card && title && desc) {
+            card.style.display = "block";
+            if (data.status === "success") {
+              title.innerHTML = `⚡ <span style="color: #059669;">n8n Cloud Webhook Triggered!</span>`;
+              desc.innerHTML = `<b>Target Webhook:</b> <code>${data.webhook_url}</code><br/><b>n8n Response:</b> HTTP ${data.n8n_status_code} — <b>Workflow successfully started!</b>`;
+            } else {
+              title.innerHTML = `⚠️ <span style="color: #EA580C;">Webhook Dispatch Warning</span>`;
+              desc.innerHTML = data.error || "Unable to reach n8n webhook.";
+            }
           }
-        }
-      }, 1500);
+        }, 1200);
+      } catch (err) {
+        outputBox.textContent = "Error: " + err.message;
+      }
+    });
+  }
 
-    } catch (err) {
-      outputBox.textContent = "Error: " + err.message;
-    }
-  });
+  if (simBtn) {
+    simBtn.addEventListener("click", async () => {
+      animateNodes();
+      const outputBox = document.getElementById("n8n-output-json");
+      outputBox.textContent = "⏳ Triggering simulated n8n morning cron webhook (POST /api/n8n/simulate)...";
+
+      try {
+        const resp = await fetch("/api/n8n/simulate", { method: "POST" });
+        const data = await resp.json();
+
+        setTimeout(() => {
+          outputBox.textContent = JSON.stringify(data, null, 2);
+
+          const card = document.getElementById("n8n-result-card");
+          const title = document.getElementById("n8n-status-title");
+          const desc = document.getElementById("n8n-status-desc");
+
+          if (card && title && desc) {
+            card.style.display = "block";
+            if (data.status === "replan_triggered") {
+              title.innerHTML = `⚠️ <span style="color: #EA580C;">Replan Triggered by n8n</span>`;
+              desc.innerHTML = `<b>Trigger Condition:</b> ${data.condition}<br/><b>Agent Action:</b> ${data.action_taken}<br/><b>Notification:</b> ${data.notification_message}`;
+            } else {
+              title.innerHTML = `✅ <span style="color: var(--emerald);">Weather Normal</span>`;
+              desc.innerHTML = data.message || "All conditions verified normal.";
+            }
+          }
+        }, 1200);
+
+      } catch (err) {
+        outputBox.textContent = "Error: " + err.message;
+      }
+    });
+  }
 
   // Dynamic Langflow status & link synchronization
   fetch("/api/langflow/status")

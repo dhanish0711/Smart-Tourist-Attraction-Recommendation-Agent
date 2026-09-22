@@ -384,9 +384,14 @@
               </div>
             </div>
 
-            <button type="button" id="btn-n8n-simulate" class="cta-button" style="width: auto; margin-bottom: 1.25rem;">
-              <span>🚀 Trigger Simulated n8n Morning Check Webhook</span>
-            </button>
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.25rem;">
+              <button type="button" id="btn-n8n-cloud" class="cta-button" style="width: auto; background: linear-gradient(135deg, #FF6D5A, #EA580C);">
+                <span>⚡ Trigger Live n8n Cloud Webhook</span>
+              </button>
+              <button type="button" id="btn-n8n-simulate" class="cta-button" style="width: auto; background: var(--slate-800);">
+                <span>🧪 Test Simulated Morning Cron</span>
+              </button>
+            </div>
 
             <div id="n8n-result-card" style="display: none; background: var(--slate-50); border: 1.5px solid var(--slate-200); border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1rem;">
               <div style="font-weight: 800; font-size: 0.95rem; color: var(--slate-900); margin-bottom: 0.4rem;" id="n8n-status-title">
